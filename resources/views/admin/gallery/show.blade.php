@@ -29,7 +29,7 @@
     </x-slot>
 
     {{-- Unggah foto --}}
-    <x-admin.card title="Tambah foto" :description="'Pilih hingga '.$maxPerUpload.' foto sekaligus. JPG, PNG, atau WebP, maksimal '.number_format(config('images.max_upload_kb') / 1024, 0).' MB per foto; otomatis dikonversi ke WebP dan dikompres.'" class="mb-8">
+    <x-admin.card title="Tambah foto" :description="'Pilih hingga '.$maxPerUpload.' foto sekaligus dengan format JPG, PNG, atau WebP. Ukuran maksimal '.number_format(config('images.max_upload_kb') / 1024, 0).' MB per foto. Foto akan otomatis dikonversi ke WebP dan dikompres.'" class="mb-8">
         <form
             method="POST"
             action="{{ route('admin.gallery.store', $activity) }}"
