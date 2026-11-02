@@ -6,16 +6,16 @@
 
     <div class="overflow-hidden rounded border border-gray-200 bg-white shadow-sm">
     <form method="GET" action="{{ route('admin.gallery.index') }}" class="flex flex-wrap items-center gap-2 border-b border-gray-200 bg-gray-50 px-4 py-3">
-        <x-select name="category" class="w-full sm:w-56" onchange="this.form.submit()" aria-label="Filter kategori">
+        <x-form.select name="category" class="w-full sm:w-56" onchange="this.form.submit()" aria-label="Filter kategori">
             <option value="">Semua kategori</option>
             @foreach ($categories as $category)
                 <option value="{{ $category->id }}" @selected($categoryId === $category->id)>{{ $category->name }}</option>
             @endforeach
-        </x-select>
+        </x-form.select>
 
         <x-admin.search :value="$search" placeholder="Cari nama, alamat URL, atau KBLI..." />
 
-        <x-secondary-button type="submit">Cari</x-secondary-button>
+        <x-admin.button variant="secondary" type="submit">Cari</x-admin.button>
 
                 {{-- Jumlah data: baris sendiri di bawah pencarian pada mobile --}}
                 <div class="flex w-full items-center gap-2 sm:w-auto">

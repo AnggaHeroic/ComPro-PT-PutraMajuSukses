@@ -32,7 +32,7 @@
             <x-application-logo class="h-9 w-auto mix-blend-multiply" />
         </a>
         <button type="button" @click="sidebar = false" aria-label="Tutup menu" class="rounded p-1.5 text-gray-500 hover:bg-gray-100 lg:hidden">
-            <x-icons.close class="h-5 w-5" />
+            <x-icon name="close" class="h-5 w-5" />
         </button>
     </div>
 
@@ -41,56 +41,56 @@
         <div>
             <p class="mb-2 px-3 text-[11px] font-bold uppercase tracking-[0.14em] text-red-500">Menu</p>
             <div class="space-y-1">
-                <x-side-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
+                <x-admin.side-link :href="route('admin.dashboard')" :active="request()->routeIs('admin.dashboard')">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
                     Dashboard
-                </x-side-link>
+                </x-admin.side-link>
             </div>
         </div>
 
         <div>
             <p class="mb-2 px-3 text-[11px] font-bold uppercase tracking-[0.14em] text-red-500">Konten</p>
             <div class="space-y-1">
-                <x-side-link :href="route('admin.pages.index')" :active="request()->routeIs('admin.pages.*')">
+                <x-admin.side-link :href="route('admin.pages.index')" :active="request()->routeIs('admin.pages.*')">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h4"/></svg>
                     Konten Halaman
-                </x-side-link>
-                <x-side-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
+                </x-admin.side-link>
+                <x-admin.side-link :href="route('admin.categories.index')" :active="request()->routeIs('admin.categories.*')">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4"/><path d="M3 17l9 4 9-4"/></svg>
                     Kategori Usaha
                     @if (($draftCounts['categories'] ?? 0) > 0)
                         <span class="ml-auto rounded-sm bg-yellow-400 px-1.5 py-0.5 text-[10px] font-bold leading-none text-yellow-950" title="{{ $draftCounts['categories'] }} draft">{{ $draftCounts['categories'] }}</span>
                     @endif
-                </x-side-link>
-                <x-side-link :href="route('admin.activities.index')" :active="request()->routeIs('admin.activities.*')">
+                </x-admin.side-link>
+                <x-admin.side-link :href="route('admin.activities.index')" :active="request()->routeIs('admin.activities.*')">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg>
                     Aktivitas Usaha
                     @if (($draftCounts['activities'] ?? 0) > 0)
                         <span class="ml-auto rounded-sm bg-yellow-400 px-1.5 py-0.5 text-[10px] font-bold leading-none text-yellow-950" title="{{ $draftCounts['activities'] }} draft">{{ $draftCounts['activities'] }}</span>
                     @endif
-                </x-side-link>
-                <x-side-link :href="route('admin.gallery.index')" :active="request()->routeIs('admin.gallery.*')">
+                </x-admin.side-link>
+                <x-admin.side-link :href="route('admin.gallery.index')" :active="request()->routeIs('admin.gallery.*')">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M21 16l-5-5-8 9"/></svg>
                     Galeri
-                </x-side-link>
+                </x-admin.side-link>
             </div>
         </div>
 
         <div>
             <p class="mb-2 px-3 text-[11px] font-bold uppercase tracking-[0.14em] text-red-500">Akun</p>
             <div class="space-y-1">
-                <x-side-link :href="route('admin.activity-log.index')" :active="request()->routeIs('admin.activity-log.*')">
+                <x-admin.side-link :href="route('admin.activity-log.index')" :active="request()->routeIs('admin.activity-log.*')">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
                     Riwayat Aktivitas
-                </x-side-link>
-                <x-side-link :href="route('admin.profile.edit')" :active="request()->routeIs('admin.profile.*')">
+                </x-admin.side-link>
+                <x-admin.side-link :href="route('admin.profile.edit')" :active="request()->routeIs('admin.profile.*')">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
                     Profil
-                </x-side-link>
-                <x-side-link :href="route('home')" target="_blank" rel="noopener">
+                </x-admin.side-link>
+                <x-admin.side-link :href="route('home')" target="_blank" rel="noopener">
                     <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
                     Lihat Website
-                </x-side-link>
+                </x-admin.side-link>
             </div>
         </div>
     </nav>

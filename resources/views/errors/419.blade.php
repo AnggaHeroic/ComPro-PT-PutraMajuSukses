@@ -54,7 +54,7 @@
                             {{-- Reload the previous page with a fresh session --}}
                             <x-button href="{{ url()->previous(url('/')) }}">
                                 Muat Ulang Halaman
-                                <x-icons.arrow-right class="h-4 w-4" />
+                                <x-icon name="arrow-right" class="h-4 w-4" />
                             </x-button>
 
                             {{-- Back to Home --}}
@@ -79,7 +79,7 @@
                             <div
                                 class="w-full max-w-[620px] text-primary"
                             >
-                                <x-icons.error-419
+                                <x-icon name="error-419"
                                     class="h-auto w-full"
                                 />
                             </div>

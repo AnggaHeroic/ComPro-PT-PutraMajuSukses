@@ -14,7 +14,7 @@
                     aria-label="Kembali ke {{ $category->name }}"
                     class="absolute left-0 top-8 z-10 inline-flex h-10 w-10 items-center justify-center text-slate-400 transition-all duration-200 hover:-translate-x-1 hover:text-primary lg:top-10"
                 >
-                    <x-icons.arrow-left />
+                    <x-icon name="arrow-left" />
                 </a>
 
                 <div class="w-full py-20 lg:py-24">
@@ -189,7 +189,7 @@
                         aria-label="Dokumentasi sebelumnya"
                         class="inline-flex h-10 w-10 items-center justify-center text-secondary-dark transition-colors duration-200 hover:border-primary hover:text-primary disabled:pointer-events-none disabled:opacity-30"
                     >
-                        <x-icons.arrow-left class="h-5 w-5" />
+                        <x-icon name="arrow-left" class="h-5 w-5" />
                     </button>
 
 
@@ -201,7 +201,7 @@
                         aria-label="Dokumentasi berikutnya"
                         class="inline-flex h-10 w-10 items-center justify-center text-secondary-dark transition-colors duration-200 hover:border-primary hover:text-primary disabled:pointer-events-none disabled:opacity-30"
                     >
-                        <x-icons.arrow-right class="h-5 w-5" />
+                        <x-icon name="arrow-right" class="h-5 w-5" />
                     </button>
 
                 </div>
@@ -245,7 +245,7 @@
                                     <span
                                         class="flex h-10 w-10 scale-90 items-center justify-center rounded-full bg-white/90 text-secondary-dark opacity-0 shadow-sm transition-all duration-300 group-hover:scale-100 group-hover:opacity-100"
                                     >
-                                        <x-icons.zoom-in class="h-5 w-5" />
+                                        <x-icon name="zoom-in" class="h-5 w-5" />
                                     </span>
                                 </span>
                             </button>
@@ -260,7 +260,7 @@
 
 
             {{-- Image Lightbox --}}
-            <x-img-lightbox
+            <x-site.img-lightbox
                 :images="$gallery"
             />
 
@@ -308,7 +308,7 @@
                             class="w-full sm:w-auto"
                         >
                             Hubungi Kami
-                            <x-icons.arrow-right
+                            <x-icon name="arrow-right"
                                 class="h-4 w-4"
                             />
                         </x-button>

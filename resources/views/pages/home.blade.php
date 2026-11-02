@@ -26,7 +26,7 @@
                     <div class="flex flex-wrap gap-3 lg:justify-end">
                         <x-button href="{{ route('about') }}">
                             {{ $content('hero_button_primary') }}
-                            <x-icons.arrow-right class="h-4 w-4" />
+                            <x-icon name="arrow-right" class="h-4 w-4" />
                         </x-button>
                         <x-button
                             href="{{ route('services') }}"
@@ -153,7 +153,7 @@
                 @php($servicePages = $navCategories->chunk(6))
 
                 @if ($servicePages->count() <= 1)
-                    <x-service-grid :categories="$navCategories" grid-class="mt-16 grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-3" />
+                    <x-site.service-grid :categories="$navCategories" grid-class="mt-16 grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-3" />
                 @else
                     <div
                         class="mt-16"
@@ -188,7 +188,7 @@
                                             x-bind:inert="current !== {{ $pageIndex }}"
                                             :aria-hidden="current !== {{ $pageIndex }}"
                                         >
-                                            <x-service-grid :categories="$pageCategories" :offset="$pageIndex * 6" />
+                                            <x-site.service-grid :categories="$pageCategories" :offset="$pageIndex * 6" />
                                         </div>
                                     @endforeach
                                 </div>
@@ -269,7 +269,7 @@
                         <div class="mt-6">
                             <x-button href="{{ route('contact') }}">
                                 {{ $content('cta_button') }}
-                                <x-icons.arrow-right class="h-4 w-4" />
+                                <x-icon name="arrow-right" class="h-4 w-4" />
                             </x-button>
                         </div>
                     </div>
@@ -292,7 +292,7 @@
                                     href="{{ \App\Support\PageContents::telHref($contact('contact_phone')) }}"
                                     class="group flex gap-4 py-3.5 first:pt-0"
                                 >
-                                    <x-icons.phone
+                                    <x-icon name="phone"
                                         class="h-[18px] w-[18px] shrink-0 text-primary"
                                     />
 
@@ -316,7 +316,7 @@
                                     href="mailto:{{ $contact('contact_email') }}"
                                     class="group flex gap-4 py-3.5"
                                 >
-                                    <x-icons.mail
+                                    <x-icon name="mail"
                                         class="h-[18px] w-[18px] shrink-0 text-primary"
                                     />
 
@@ -343,7 +343,7 @@
                                     class="group flex gap-4 py-3.5 last:pb-0"
                                     aria-label="Lihat alamat PT. Putra Maju Sukses di Google Maps"
                                 >
-                                    <x-icons.maps
+                                    <x-icon name="maps"
                                         class="h-[18px] w-[18px] shrink-0 text-primary"
                                     />
 

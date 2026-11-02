@@ -132,7 +132,7 @@
                     <div class="mt-8">
 
                         {{-- Email --}}
-                        <x-contact-card
+                        <x-site.contact-card
                             type="email"
                             title="Email"
                             :value="$contactEmail"
@@ -141,7 +141,7 @@
                         />
 
                         {{-- Phone --}}
-                        <x-contact-card
+                        <x-site.contact-card
                             type="phone"
                             title="Telepon"
                             :value="$content('contact_phone')"
@@ -150,7 +150,7 @@
                         />
 
                         {{-- Address --}}
-                        <x-contact-card
+                        <x-site.contact-card
                             type="location"
                             title="Alamat"
                             :value="$content('contact_address')"
@@ -202,7 +202,7 @@
 
                     {{-- Address Caption --}}
                     <div class="mt-4 flex items-start gap-3">
-                        <x-icons.maps
+                        <x-icon name="maps"
                             class="mt-0.5 h-4 w-4 shrink-0 text-primary"
                         />
 
@@ -266,7 +266,7 @@
                         class="w-full bg-primary text-white hover:bg-primary-dark sm:w-auto"
                     >
                         {{ $content('cta_button') }}
-                        <x-icons.arrow-right class="h-4 w-4" />
+                        <x-icon name="arrow-right" class="h-4 w-4" />
                     </x-button>
                 </div>
             </div>

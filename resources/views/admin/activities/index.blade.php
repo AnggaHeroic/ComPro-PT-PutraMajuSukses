@@ -19,15 +19,15 @@
         @if ($reorder)
             {{-- Mode atur urutan: urutan berlaku di dalam kategori masing-masing --}}
             <div class="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-gray-200 bg-primary-light/60 px-4 py-3">
-                <x-admin.reorder-toggle :active="true" :href="route('admin.activities.index', $categoryParam)" @click.prevent="cancel($el.href)" />
+                <x-admin.reorder.toggle :active="true" :href="route('admin.activities.index', $categoryParam)" @click.prevent="cancel($el.href)" />
 
                 <p class="text-sm text-gray-600">Seret baris atau pakai tombol panah untuk mengubah urutan di dalam kategorinya. Perubahan baru disimpan saat Anda menekan Selesai.</p>
 
-                <x-admin.reorder-status />
+                <x-admin.reorder.status />
 
                 <div class="ml-auto flex items-center gap-2">
-                    <x-secondary-button :href="route('admin.activities.index', $categoryParam)" @click.prevent="cancel($el.href)">Batal</x-secondary-button>
-                    <x-secondary-button :href="route('admin.activities.index', $categoryParam)" @click.prevent="finish($el.href)">Selesai</x-secondary-button>
+                    <x-admin.button variant="secondary" :href="route('admin.activities.index', $categoryParam)" @click.prevent="cancel($el.href)">Batal</x-admin.button>
+                    <x-admin.button variant="secondary" :href="route('admin.activities.index', $categoryParam)" @click.prevent="finish($el.href)">Selesai</x-admin.button>
                 </div>
             </div>
         @else
@@ -38,16 +38,16 @@
                     <input type="hidden" name="status" value="{{ $status }}">
                 @endif
 
-                <x-select name="category" class="w-full sm:w-56" onchange="this.form.submit()" aria-label="Filter kategori">
+                <x-form.select name="category" class="w-full sm:w-56" onchange="this.form.submit()" aria-label="Filter kategori">
                     <option value="">Semua kategori</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}" @selected($categoryId === $category->id)>{{ $category->name }}</option>
                     @endforeach
-                </x-select>
+                </x-form.select>
 
                 <x-admin.search :value="$search" placeholder="Cari nama, alamat URL, atau KBLI..." />
 
-                <x-secondary-button type="submit">Cari</x-secondary-button>
+                <x-admin.button variant="secondary" type="submit">Cari</x-admin.button>
 
                 {{-- Jumlah data: baris sendiri di bawah pencarian pada mobile --}}
                 <div class="flex w-full items-center gap-2 sm:w-auto">
@@ -58,13 +58,13 @@
                 </div>
 
                 <div class="flex w-full items-center justify-between gap-4 sm:ml-auto sm:w-auto sm:justify-start">
-                    <x-admin.reorder-toggle
+                    <x-admin.reorder.toggle
                         :href="route('admin.activities.index', $categoryParam + ['reorder' => 1])"
                         :disabled="$filtered || $total < 2"
                         :reason="$filtered ? 'Hapus pencarian atau filter status untuk mengatur urutan.' : 'Perlu minimal dua aktivitas.'"
                     />
 
-                    <x-primary-button :href="route('admin.activities.create', $categoryParam)">+ Tambah Aktivitas</x-primary-button>
+                    <x-admin.button :href="route('admin.activities.create', $categoryParam)">+ Tambah Aktivitas</x-admin.button>
                 </div>
             </form>
         @endif
@@ -111,7 +111,7 @@
                         >
                             @if ($reorder)
                                 <td class="px-4 py-3 text-center">
-                                    <x-admin.reorder-handle :label="$activity->name" />
+                                    <x-admin.reorder.handle :label="$activity->name" />
                                 </td>
                                 <td class="px-4 py-3 text-center text-gray-500" data-position>{{ $positions[$activity->service_category_id] }}</td>
                             @endif

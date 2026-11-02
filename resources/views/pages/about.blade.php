@@ -349,7 +349,7 @@
                         </div>
                         <x-button href="{{ route('services') }}">
                             {{ $content('cta_button') }}
-                            <x-icons.arrow-right class="h-4 w-4" />
+                            <x-icon name="arrow-right" class="h-4 w-4" />
                         </x-button>
                     </div>
                 </div>

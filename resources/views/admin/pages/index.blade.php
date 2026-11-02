@@ -33,7 +33,7 @@
 
                 <div class="flex items-center justify-between gap-4 border-t border-gray-200 bg-gray-50 px-5 py-3">
                     <p class="text-xs text-gray-500">{{ count($page['sections']) }} bagian</p>
-                    <x-primary-button :href="route('admin.pages.edit', $key)" size="sm">Kelola</x-primary-button>
+                    <x-admin.button :href="route('admin.pages.edit', $key)" size="sm">Kelola</x-admin.button>
                 </div>
             </section>
         @endforeach

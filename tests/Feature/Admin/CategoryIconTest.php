@@ -5,6 +5,7 @@ namespace Tests\Feature\Admin;
 use App\Models\ServiceCategory;
 use App\Models\User;
 use App\Support\CategoryIcons;
+use App\Support\Icons;
 use Database\Seeders\ServiceCatalogSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
@@ -37,14 +38,14 @@ class CategoryIconTest extends TestCase
         ], $overrides);
     }
 
-    public function test_every_whitelisted_icon_has_a_blade_component_that_renders(): void
+    public function test_every_whitelisted_icon_is_registered_and_renders(): void
     {
         $this->assertGreaterThanOrEqual(20, count(CategoryIcons::keys()));
 
         foreach (CategoryIcons::keys() as $key) {
-            $this->assertTrue(view()->exists("components.icons.{$key}"), "Komponen ikon '{$key}' tidak ditemukan.");
+            $this->assertTrue(Icons::has($key), "Ikon '{$key}' belum didaftarkan di App\\Support\\Icons.");
 
-            $html = (string) $this->blade('<x-dynamic-component :component="$component" />', ['component' => 'icons.'.$key]);
+            $html = (string) $this->blade('<x-icon :name="$name" />', ['name' => $key]);
             $this->assertStringContainsString('<svg', $html, $key);
             $this->assertStringContainsString('currentColor', $html, $key);
         }
@@ -52,11 +53,19 @@ class CategoryIconTest extends TestCase
 
     public function test_new_custom_icons_honor_size_classes_without_default_conflict(): void
     {
-        $html = (string) $this->blade('<x-icons.truck class="h-5 w-5" />');
+        $html = (string) $this->blade('<x-icon name="truck" class="h-5 w-5" />');
 
         $this->assertStringContainsString('h-5 w-5', $html);
         $this->assertStringNotContainsString('h-11', $html);
-        $this->assertStringContainsString('h-11 w-11', (string) $this->blade('<x-icons.truck />'));
+        $this->assertStringContainsString('h-11 w-11', (string) $this->blade('<x-icon name="truck" />'));
+    }
+
+    public function test_an_unregistered_icon_name_fails_with_a_clear_message(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('belum didaftarkan');
+
+        Icons::get('tidak-ada');
     }
 
     public function test_seeded_categories_keep_their_original_icons(): void

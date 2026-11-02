@@ -5,9 +5,9 @@
     </x-slot>
 
     <x-slot name="actions">
-        <x-secondary-button size="sm" :href="route('home')" target="_blank" rel="noopener">Lihat website
+        <x-admin.button variant="secondary" size="sm" :href="route('home')" target="_blank" rel="noopener">Lihat website
             <x-admin.arrow direction="external" class="h-3.5 w-3.5" />
-        </x-secondary-button>
+        </x-admin.button>
     </x-slot>
 
     {{-- Banner: elemen visual yang sama dengan halaman login --}}

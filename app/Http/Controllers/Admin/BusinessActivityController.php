@@ -74,7 +74,7 @@ class BusinessActivityController extends Controller
             'is_published' => true,
         ]);
 
-        return view('admin.activities.create', [
+        return view('admin.activities.form', [
             'activity' => $activity,
             'categories' => ServiceCategory::ordered()->get(['id', 'name']),
         ]);
@@ -101,7 +101,7 @@ class BusinessActivityController extends Controller
 
     public function edit(BusinessActivity $activity): View
     {
-        return view('admin.activities.edit', [
+        return view('admin.activities.form', [
             'activity' => $activity,
             'categories' => ServiceCategory::ordered()->get(['id', 'name']),
         ]);

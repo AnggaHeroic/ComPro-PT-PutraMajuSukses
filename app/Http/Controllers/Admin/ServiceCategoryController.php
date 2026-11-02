@@ -53,7 +53,7 @@ class ServiceCategoryController extends Controller
             'is_published' => true,
         ]);
 
-        return view('admin.categories.create', compact('category'));
+        return view('admin.categories.form', compact('category'));
     }
 
     public function store(ServiceCategoryRequest $request, ImageUploader $images): RedirectResponse
@@ -87,7 +87,7 @@ class ServiceCategoryController extends Controller
 
     public function edit(ServiceCategory $category): View
     {
-        return view('admin.categories.edit', compact('category'));
+        return view('admin.categories.form', compact('category'));
     }
 
     public function update(ServiceCategoryRequest $request, ServiceCategory $category, ImageUploader $images): RedirectResponse

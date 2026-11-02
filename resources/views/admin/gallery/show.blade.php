@@ -19,11 +19,11 @@
     </x-slot>
 
     <x-slot name="actions">
-        <x-secondary-button size="sm" :href="route('admin.activities.edit', $activity)">Edit aktivitas</x-secondary-button>
+        <x-admin.button variant="secondary" size="sm" :href="route('admin.activities.edit', $activity)">Edit aktivitas</x-admin.button>
         @if ($publicUrl)
-            <x-secondary-button size="sm" :href="$publicUrl" target="_blank" rel="noopener">Lihat di website
+            <x-admin.button variant="secondary" size="sm" :href="$publicUrl" target="_blank" rel="noopener">Lihat di website
                 <x-admin.arrow direction="external" class="h-3.5 w-3.5" />
-            </x-secondary-button>
+            </x-admin.button>
         @endif
         <x-admin.back :href="route('admin.gallery.index', ['category' => $activity->service_category_id])" />
     </x-slot>
@@ -61,9 +61,9 @@
                 @endif
             </div>
 
-            <x-primary-button x-bind:disabled="count === 0">
+            <x-admin.button x-bind:disabled="count === 0">
                 Unggah <span x-show="count > 0" x-text="'(' + count + ')'"></span>
-            </x-primary-button>
+            </x-admin.button>
         </form>
     </x-admin.card>
 
@@ -111,7 +111,7 @@
 
                 <div class="flex items-center gap-3">
                     <span x-show="dirty" x-cloak class="text-xs text-amber-700">Urutan belum disimpan</span>
-                    <x-primary-button x-bind:disabled="! dirty">Simpan urutan</x-primary-button>
+                    <x-admin.button x-bind:disabled="! dirty">Simpan urutan</x-admin.button>
                 </div>
             </form>
 
@@ -217,14 +217,14 @@
                                 @method('DELETE')
                             </form>
 
-                            <x-input-error :messages="array_merge($bag->get('caption'), $bag->get('image'))" class="mt-2 text-xs" />
+                            <x-form.error :messages="array_merge($bag->get('caption'), $bag->get('image'))" class="mt-2 text-xs" />
                         </div>
                     </article>
                 @endforeach
             </div>
 
             {{-- Pratinjau foto (komponen yang sama dengan halaman publik) --}}
-            <x-img-lightbox :images="$images->pluck('image_url')->all()" />
+            <x-site.img-lightbox :images="$images->pluck('image_url')->all()" />
         </div>
     @endif
 </x-app-layout>

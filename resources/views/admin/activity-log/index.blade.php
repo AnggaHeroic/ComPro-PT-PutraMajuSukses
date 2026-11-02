@@ -63,24 +63,24 @@
             @endunless
 
             @if ($showMenu)
-                <x-select name="menu" class="w-full sm:w-48" onchange="this.form.submit()" aria-label="Filter menu">
+                <x-form.select name="menu" class="w-full sm:w-48" onchange="this.form.submit()" aria-label="Filter menu">
                     <option value="">Semua menu</option>
                     @foreach ($menus as $item)
                         <option value="{{ $item }}" @selected($menu === $item)>{{ $item }}</option>
                     @endforeach
-                </x-select>
+                </x-form.select>
             @endif
 
-            <x-select name="action" class="w-full sm:w-44" onchange="this.form.submit()" aria-label="Filter aksi">
+            <x-form.select name="action" class="w-full sm:w-44" onchange="this.form.submit()" aria-label="Filter aksi">
                 <option value="">Semua aksi</option>
                 @foreach ($actions as $key => [$label])
                     <option value="{{ $key }}" @selected($action === $key)>{{ $label }}</option>
                 @endforeach
-            </x-select>
+            </x-form.select>
 
             <x-admin.search :value="$search" placeholder="Cari keterangan atau admin..." />
 
-            <x-secondary-button type="submit">Cari</x-secondary-button>
+            <x-admin.button variant="secondary" type="submit">Cari</x-admin.button>
 
             {{-- Filter tanggal: satu tombol ikon; panelnya berisi pintasan, rentang, atau satu hari tertentu --}}
             <div

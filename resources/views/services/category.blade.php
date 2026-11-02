@@ -26,7 +26,7 @@
                 aria-label="Kembali ke Layanan & Jasa"
                 class="absolute left-6 top-6 z-20 inline-flex h-10 w-10 items-center justify-center text-white/70 transition-all duration-200 hover:-translate-x-1 hover:text-white sm:left-8 sm:top-8 lg:left-10 lg:top-10"
             >
-                <x-icons.arrow-left class="h-4 w-4" />
+                <x-icon name="arrow-left" class="h-4 w-4" />
             </a>
 
             {{-- Content --}}

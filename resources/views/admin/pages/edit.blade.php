@@ -30,7 +30,7 @@
     <x-slot name="actions">
         <x-admin.back :href="route('admin.pages.index')" />
         @if ($publicRoute)
-            <x-secondary-button :href="route($publicRoute)" target="_blank" rel="noopener" size="sm" class="max-sm:hidden">Lihat halaman</x-secondary-button>
+            <x-admin.button variant="secondary" :href="route($publicRoute)" target="_blank" rel="noopener" size="sm" class="max-sm:hidden">Lihat halaman</x-admin.button>
         @endif
     </x-slot>
 
@@ -126,11 +126,11 @@
                                                 </div>
 
                                                 @if ($type === 'title')
-                                                    <x-admin.title-field :id="'content_'.$key" :name="'content['.$key.']'" :value="$value" :max="$max" />
+                                                    <x-admin.fields.title :id="'content_'.$key" :name="'content['.$key.']'" :value="$value" :max="$max" />
                                                 @elseif ($type === 'textarea')
-                                                    <x-textarea :id="'content_'.$key" :name="'content['.$key.']'" rows="4" :maxlength="$max" :required="! $optional">{{ $value }}</x-textarea>
+                                                    <x-form.textarea :id="'content_'.$key" :name="'content['.$key.']'" rows="4" :maxlength="$max" :required="! $optional">{{ $value }}</x-form.textarea>
                                                 @else
-                                                    <x-text-input :id="'content_'.$key" :name="'content['.$key.']'" type="text" :value="$value" :maxlength="$max" :required="! $optional" />
+                                                    <x-form.input :id="'content_'.$key" :name="'content['.$key.']'" type="text" :value="$value" :maxlength="$max" :required="! $optional" />
                                                 @endif
 
                                                 @if (! empty($field['hint']))
@@ -139,12 +139,12 @@
                                                         <span>{{ $field['hint'] }}</span>
                                                     </p>
                                                 @endif
-                                                <x-input-error :messages="$messages" class="mt-2" />
+                                                <x-form.error :messages="$messages" class="mt-2" />
                                             </div>
                                         @elseif ($type === 'image')
                                             <div>
                                                 @php($custom = $content->customImagePath($key))
-                                                <x-admin.image-field
+                                                <x-admin.fields.image
                                                     :name="'image_'.$key"
                                                     :remove-name="'remove_image_'.$key"
                                                     :label="$field['label']"
@@ -160,7 +160,7 @@
                                                 <p class="mb-1.5 text-sm font-medium text-gray-700">{{ $field['label'] }}</p>
 
                                                 @if ($type === 'list')
-                                                    <x-admin.list-field
+                                                    <x-admin.fields.list
                                                         :name="'content['.$key.'][]'"
                                                         :items="old('content.'.$key, $content->list($key))"
                                                         :item-label="$field['item_label'] ?? 'Butir'"
@@ -169,7 +169,7 @@
                                                         :min-items="$field['min_items'] ?? 1"
                                                     />
                                                 @elseif ($type === 'cards')
-                                                    <x-admin.card-list-field
+                                                    <x-admin.fields.card-list
                                                         :name="'content['.$key.']'"
                                                         :items="old('content.'.$key, $content->cards($key))"
                                                         :item-label="$field['item_label'] ?? 'Butir'"
@@ -186,7 +186,7 @@
                                                 @if (! empty($field['hint']))
                                                     <p class="mt-1.5 text-xs leading-5 text-gray-500">{{ $field['hint'] }}</p>
                                                 @endif
-                                                <x-input-error :messages="$messages" class="mt-2" />
+                                                <x-form.error :messages="$messages" class="mt-2" />
                                             </div>
                                         @endif
                                     @endforeach
@@ -248,7 +248,7 @@
                 data-confirm-second-tone="primary"
             >
                 @csrf
-                <x-secondary-button type="submit" size="sm" class="w-40">Setel default</x-secondary-button>
+                <x-admin.button variant="secondary" type="submit" size="sm" class="w-40">Setel default</x-admin.button>
             </form>
 
             <form
@@ -264,7 +264,7 @@
             >
                 @csrf
                 @method('DELETE')
-                <x-secondary-button type="submit" size="sm" class="border-red-300! text-red-700! hover:border-red-400! hover:bg-red-50! w-40">Reset default</x-secondary-button>
+                <x-admin.button variant="secondary" type="submit" size="sm" class="border-red-300! text-red-700! hover:border-red-400! hover:bg-red-50! w-40">Reset default</x-admin.button>
             </form>
 
             @if ($content->hasCustomDefaults())
