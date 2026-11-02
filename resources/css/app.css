@@ -16,8 +16,9 @@
 
     --color-surface: #f8f9fa;
 
-    --font-display: "Inter", sans-serif;
-    --font-body: "Montserrat", sans-serif;
+    /* Montserrat untuk judul, heading, dan label; Inter untuk teks isi. */
+    --font-display: "Montserrat", sans-serif;
+    --font-body: "Inter", sans-serif;
 }
 
 @layer base {
@@ -27,8 +28,18 @@
     html {
         scroll-behavior: smooth;
     }
+    /* Teks isi memakai bobot medium agar tidak samar di atas latar putih. */
     body {
-        @apply bg-white font-body text-secondary-dark antialiased;
+        @apply bg-white font-body font-medium text-secondary-dark antialiased;
+    }
+    /* Semua heading memakai font judul, juga yang tidak diberi kelas font-display. */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-display;
     }
     ::selection {
         @apply bg-primary text-white;
