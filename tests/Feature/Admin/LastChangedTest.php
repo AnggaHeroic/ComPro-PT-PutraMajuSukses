@@ -73,6 +73,8 @@ class LastChangedTest extends TestCase
         $category = ServiceCategory::factory()->create();
         $mine = BusinessActivity::factory()->for($category, 'category')->create(['name' => 'Akt Saya']);
         $other = BusinessActivity::factory()->for($category, 'category')->create(['name' => 'Akt Lain']);
+        // Pembuatan lewat factory ikut dicatat observer; uji ini memerlukan riwayat yang kosong.
+        ActivityLog::query()->delete();
 
         $this->logFor("activity:{$other->id}", 'updated', '2026-10-27 10:00:00', 'Admin Lain');
         $this->logFor("activity:{$mine->id}", 'updated', '2026-10-20 08:00:00', 'Admin Saya');
@@ -88,6 +90,9 @@ class LastChangedTest extends TestCase
     public function test_the_latest_change_wins_and_non_change_actions_are_ignored(): void
     {
         $category = ServiceCategory::factory()->create();
+        // Pembuatan lewat factory ikut dicatat observer; uji ini memerlukan riwayat yang kosong.
+        ActivityLog::query()->delete();
+
         $this->logFor("category:{$category->id}", 'created', '2026-10-01 08:00:00', 'Pembuat');
         $this->logFor("category:{$category->id}", 'updated', '2026-10-05 08:00:00', 'Pengubah Lama');
         $this->logFor("category:{$category->id}", 'updated', '2026-10-09 08:00:00', 'Pengubah Baru');
@@ -101,6 +106,9 @@ class LastChangedTest extends TestCase
     public function test_without_any_log_the_model_time_is_used_without_a_name(): void
     {
         $category = ServiceCategory::factory()->create();
+        // Pembuatan lewat factory ikut dicatat observer; uji ini memerlukan riwayat yang kosong.
+        ActivityLog::query()->delete();
+
         ServiceCategory::whereKey($category->id)->update(['created_at' => now()->subDays(10), 'updated_at' => now()->subDays(3)]);
 
         $html = $this->get("/admin/categories/{$category->id}/edit")->getContent();
@@ -153,6 +161,8 @@ class LastChangedTest extends TestCase
     {
         $category = ServiceCategory::factory()->create();
         $activity = BusinessActivity::factory()->for($category, 'category')->create();
+        // Pembuatan lewat factory ikut dicatat observer; uji ini memerlukan riwayat yang kosong.
+        ActivityLog::query()->delete();
 
         ActivityLogger::record('updated', 'Kategori', 'a', subject: $category);
         ActivityLogger::record('updated', 'Aktivitas Usaha', 'b', subject: $activity);

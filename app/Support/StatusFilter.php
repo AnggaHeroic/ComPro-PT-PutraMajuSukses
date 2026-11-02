@@ -1,23 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Concerns;
+namespace App\Support;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
-trait FiltersByStatus
+class StatusFilter
 {
     /**
      * Filter status dari query string: "published", "draft", atau null (semua).
      */
-    protected function statusFilter(Request $request): ?string
+    public static function fromRequest(Request $request): ?string
     {
         $status = $request->query('status');
 
         return in_array($status, ['published', 'draft'], true) ? $status : null;
     }
 
-    protected function applyStatus(Builder $query, ?string $status): Builder
+    public static function apply(Builder $query, ?string $status): Builder
     {
         return match ($status) {
             'published' => $query->where('is_published', true),
@@ -31,7 +31,7 @@ trait FiltersByStatus
      *
      * @return array{total: int, published: int, draft: int}
      */
-    protected function statusCounts(Builder $scope): array
+    public static function counts(Builder $scope): array
     {
         $row = $scope->clone()
             ->toBase()

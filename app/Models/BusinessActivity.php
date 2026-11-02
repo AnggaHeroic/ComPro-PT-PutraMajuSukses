@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Models\Concerns\ResolvesImageUrl;
+use App\Observers\BusinessActivityObserver;
 use App\Support\Slug;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -16,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
     'service_category_id', 'kbli_code', 'name', 'slug', 'short_description',
     'description', 'image_path', 'sort_order', 'is_published',
 ])]
+#[ObservedBy(BusinessActivityObserver::class)]
 class BusinessActivity extends Model
 {
     /** @use HasFactory<\Database\Factories\BusinessActivityFactory> */

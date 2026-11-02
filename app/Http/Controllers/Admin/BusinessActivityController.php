@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Admin\Concerns\FiltersByStatus;
-use App\Http\Controllers\Admin\Concerns\StoresUploadedImage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\BusinessActivityRequest;
 use App\Http\Requests\Admin\ReorderItemsRequest;
@@ -12,6 +10,8 @@ use App\Models\BusinessActivity;
 use App\Models\ServiceCategory;
 use App\Services\ImageUploader;
 use App\Support\ActivityLogger;
+use App\Support\StatusFilter;
+use App\Support\UploadedImage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -22,23 +22,14 @@ use Throwable;
 
 class BusinessActivityController extends Controller
 {
-    use FiltersByStatus, StoresUploadedImage;
-
     private const NON_COLUMN_FIELDS = ['image', 'remove_image', 'status'];
-
-    /** Nama kolom untuk riwayat aktivitas. */
-    private const LOG_LABELS = [
-        'service_category_id' => 'Kategori', 'kbli_code' => 'Kode KBLI', 'name' => 'Nama', 'slug' => 'Alamat URL',
-        'short_description' => 'Deskripsi singkat', 'description' => 'Deskripsi detail', 'image_path' => 'Gambar',
-        'is_published' => 'Status',
-    ];
 
     public function index(Request $request): View
     {
         $search = trim((string) $request->query('q'));
         $categoryId = $request->integer('category') ?: null;
-        $status = $this->statusFilter($request);
-        $counts = $this->statusCounts(
+        $status = StatusFilter::fromRequest($request);
+        $counts = StatusFilter::counts(
             BusinessActivity::query()->when($categoryId, fn ($query) => $query->where('service_category_id', $categoryId))
         );
 
@@ -46,7 +37,7 @@ class BusinessActivityController extends Controller
         $reorder = $request->boolean('reorder') && $search === '' && $status === null;
 
         $query = BusinessActivity::query()
-            ->tap(fn ($query) => $this->applyStatus($query, $status))
+            ->tap(fn ($query) => StatusFilter::apply($query, $status))
             ->with('category:id,name,slug')
             ->withCount('images')
             ->when($categoryId, fn ($query) => $query->where('service_category_id', $categoryId))
@@ -91,7 +82,7 @@ class BusinessActivityController extends Controller
 
     public function store(BusinessActivityRequest $request, ImageUploader $images): RedirectResponse
     {
-        $path = $this->storeUploadedImage($request, $images, 'activities');
+        $path = UploadedImage::store($request, $images, 'activities');
 
         try {
             $activity = BusinessActivity::create([
@@ -104,9 +95,6 @@ class BusinessActivityController extends Controller
 
             throw $e;
         }
-
-        $activity->loadMissing('category:id,name');
-        ActivityLogger::record(ActivityLog::ACTION_CREATED, 'Aktivitas Usaha', "Menambahkan aktivitas \"{$activity->name}\" (kategori: {$activity->category?->name}, status: ".ActivityLogger::status($activity->is_published).')', subject: $activity);
 
         return $this->redirectAfterSave($activity, 'Aktivitas berhasil ditambahkan.');
     }
@@ -123,7 +111,7 @@ class BusinessActivityController extends Controller
     {
         $data = $request->safe()->except(self::NON_COLUMN_FIELDS);
         $oldPath = $activity->image_path;
-        $newPath = $this->storeUploadedImage($request, $images, 'activities');
+        $newPath = UploadedImage::store($request, $images, 'activities');
 
         if ((int) $data['service_category_id'] !== $activity->service_category_id) {
             $data['sort_order'] = (int) BusinessActivity::where('service_category_id', $data['service_category_id'])->max('sort_order') + 1;
@@ -143,14 +131,8 @@ class BusinessActivityController extends Controller
             throw $e;
         }
 
-        $changed = ActivityLogger::changedLabels($activity, self::LOG_LABELS);
-
         if (array_key_exists('image_path', $data)) {
             $images->release($oldPath);
-        }
-
-        if ($changed !== '') {
-            ActivityLogger::record(ActivityLog::ACTION_UPDATED, 'Aktivitas Usaha', "Mengubah aktivitas \"{$activity->name}\" (yang diubah: {$changed})", subject: $activity);
         }
 
         return $this->redirectAfterSave($activity, 'Aktivitas berhasil diperbarui.');
@@ -161,15 +143,12 @@ class BusinessActivityController extends Controller
         // Baris galeri ikut terhapus oleh database (cascade); file fisiknya dibersihkan di sini.
         $paths = $activity->images()->pluck('image_path')->push($activity->image_path)->all();
         $categoryId = $activity->service_category_id;
-        $categoryName = $activity->category()->value('name');
 
         $activity->delete();
 
         foreach ($paths as $path) {
             $images->release($path);
         }
-
-        ActivityLogger::record(ActivityLog::ACTION_DELETED, 'Aktivitas Usaha', "Menghapus aktivitas \"{$activity->name}\" (kategori: {$categoryName})");
 
         return redirect()
             ->route('admin.activities.index', ['category' => $categoryId])

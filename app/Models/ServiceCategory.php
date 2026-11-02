@@ -4,8 +4,10 @@ namespace App\Models;
 
 use App\Models\Concerns\ResolvesImageUrl;
 use App\Support\CategoryIcons;
+use App\Observers\ServiceCategoryObserver;
 use App\Support\Slug;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Fillable(['name', 'slug', 'description', 'image_path', 'icon', 'icon_image_path', 'sort_order', 'is_published'])]
+#[ObservedBy(ServiceCategoryObserver::class)]
 class ServiceCategory extends Model
 {
     /** @use HasFactory<\Database\Factories\ServiceCategoryFactory> */

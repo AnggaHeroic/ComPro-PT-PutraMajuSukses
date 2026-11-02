@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Admin\Concerns\FiltersByStatus;
-use App\Http\Controllers\Admin\Concerns\StoresUploadedImage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ReorderItemsRequest;
 use App\Http\Requests\Admin\ServiceCategoryRequest;
@@ -11,6 +9,8 @@ use App\Models\ActivityLog;
 use App\Models\ServiceCategory;
 use App\Services\ImageUploader;
 use App\Support\ActivityLogger;
+use App\Support\StatusFilter;
+use App\Support\UploadedImage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -21,27 +21,19 @@ use Throwable;
 
 class ServiceCategoryController extends Controller
 {
-    use FiltersByStatus, StoresUploadedImage;
-
     private const UPLOAD_FIELDS = ['image', 'remove_image', 'icon_image', 'remove_icon_image', 'status'];
-
-    /** Nama kolom untuk riwayat aktivitas. */
-    private const LOG_LABELS = [
-        'name' => 'Nama', 'slug' => 'Alamat URL', 'description' => 'Deskripsi', 'image_path' => 'Gambar',
-        'icon' => 'Ikon', 'icon_image_path' => 'Ikon kustom', 'is_published' => 'Status',
-    ];
 
     public function index(Request $request): View
     {
         $search = trim((string) $request->query('q'));
-        $status = $this->statusFilter($request);
-        $counts = $this->statusCounts(ServiceCategory::query());
+        $status = StatusFilter::fromRequest($request);
+        $counts = StatusFilter::counts(ServiceCategory::query());
 
         // Mode atur urutan: hanya tanpa pencarian/filter, memuat semua baris agar urutan utuh.
         $reorder = $request->boolean('reorder') && $search === '' && $status === null;
 
         $query = ServiceCategory::query()
-            ->tap(fn ($query) => $this->applyStatus($query, $status))
+            ->tap(fn ($query) => StatusFilter::apply($query, $status))
             ->withCount('activities')
             ->when($search !== '', fn ($query) => $query->where(function ($query) use ($search) {
                 $query->where('name', 'like', "%{$search}%")
@@ -66,10 +58,10 @@ class ServiceCategoryController extends Controller
 
     public function store(ServiceCategoryRequest $request, ImageUploader $images): RedirectResponse
     {
-        $path = $this->storeUploadedImage($request, $images, 'categories');
+        $path = UploadedImage::store($request, $images, 'categories');
 
         try {
-            $iconPath = $this->storeUploadedImage($request, $images, 'category-icons', 'icon_image', 256);
+            $iconPath = UploadedImage::store($request, $images, 'category-icons', 'icon_image', 256);
         } catch (Throwable $e) {
             $images->release($path);
 
@@ -90,8 +82,6 @@ class ServiceCategoryController extends Controller
             throw $e;
         }
 
-        ActivityLogger::record(ActivityLog::ACTION_CREATED, 'Kategori', "Menambahkan kategori \"{$category->name}\" (status: ".ActivityLogger::status($category->is_published).')', subject: $category);
-
         return $this->redirectAfterSave($category, 'Kategori berhasil ditambahkan.');
     }
 
@@ -105,10 +95,10 @@ class ServiceCategoryController extends Controller
         $data = $request->safe()->except(self::UPLOAD_FIELDS);
         $oldPath = $category->image_path;
         $oldIconPath = $category->icon_image_path;
-        $newPath = $this->storeUploadedImage($request, $images, 'categories');
+        $newPath = UploadedImage::store($request, $images, 'categories');
 
         try {
-            $newIconPath = $this->storeUploadedImage($request, $images, 'category-icons', 'icon_image', 256);
+            $newIconPath = UploadedImage::store($request, $images, 'category-icons', 'icon_image', 256);
         } catch (Throwable $e) {
             $images->release($newPath);
 
@@ -136,18 +126,12 @@ class ServiceCategoryController extends Controller
             throw $e;
         }
 
-        $changed = ActivityLogger::changedLabels($category, self::LOG_LABELS);
-
         if (array_key_exists('image_path', $data)) {
             $images->release($oldPath);
         }
 
         if (array_key_exists('icon_image_path', $data)) {
             $images->release($oldIconPath);
-        }
-
-        if ($changed !== '') {
-            ActivityLogger::record(ActivityLog::ACTION_UPDATED, 'Kategori', "Mengubah kategori \"{$category->name}\" (yang diubah: {$changed})", subject: $category);
         }
 
         return $this->redirectAfterSave($category, 'Kategori berhasil diperbarui.');
@@ -166,8 +150,6 @@ class ServiceCategoryController extends Controller
         $category->delete();
         $images->release($category->image_path);
         $images->release($category->icon_image_path);
-
-        ActivityLogger::record(ActivityLog::ACTION_DELETED, 'Kategori', "Menghapus kategori \"{$category->name}\"");
 
         return redirect()
             ->route('admin.categories.index')

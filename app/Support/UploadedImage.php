@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Concerns;
+namespace App\Support;
 
 use App\Services\ImageUploader;
 use Illuminate\Http\Request;
@@ -8,13 +8,13 @@ use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
 use RuntimeException;
 
-trait StoresUploadedImage
+class UploadedImage
 {
     /**
      * Simpan gambar dari field upload (default "image") sebagai WebP; kembalikan path relatif atau null.
      * Kegagalan pengolahan diubah menjadi error validasi, bukan 500.
      */
-    protected function storeUploadedImage(Request $request, ImageUploader $images, string $directory, string $field = 'image', ?int $maxWidth = null): ?string
+    public static function store(Request $request, ImageUploader $images, string $directory, string $field = 'image', ?int $maxWidth = null): ?string
     {
         if (! $request->hasFile($field)) {
             return null;
