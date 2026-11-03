@@ -138,7 +138,7 @@
                             </td>
                             <td class="px-4 py-3 text-center">
                                 <a href="{{ route('admin.gallery.show', $activity) }}" class="inline-flex items-center gap-1 text-xs font-semibold {{ $activity->images_count > 0 ? 'text-primary-dark' : 'text-gray-400' }} hover:text-primary" title="Kelola galeri">
-                                    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M21 16l-5-5-8 9"/></svg>
+                                    <x-icon name="image" class="h-3.5 w-3.5" />
                                     {{ $activity->images_count }}
                                 </a>
                             </td>

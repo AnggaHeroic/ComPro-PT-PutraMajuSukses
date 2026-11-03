@@ -20,7 +20,7 @@
 
         <div class="flex shrink-0 items-center gap-2">
             <button type="button" @click="schedule(0)" class="inline-flex items-center gap-1.5 rounded border border-gray-300 bg-white px-2.5 py-1 text-xs font-medium text-gray-700 transition hover:bg-gray-100">
-                <svg class="h-3.5 w-3.5" :class="loading && 'animate-spin'" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M20 12a8 8 0 1 1-2.3-5.7M20 4v5h-5"/></svg>
+                <x-icon name="refresh" class="h-3.5 w-3.5" ::class="loading && 'animate-spin'" />
                 Muat ulang
             </button>
             <button type="button" @click="open = ! open" :aria-expanded="open" class="rounded border border-gray-300 bg-white px-2.5 py-1 text-xs font-medium text-gray-700 transition hover:bg-gray-100" x-text="open ? 'Sembunyikan' : 'Tampilkan'"></button>

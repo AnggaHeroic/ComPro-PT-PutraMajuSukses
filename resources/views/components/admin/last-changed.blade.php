@@ -25,7 +25,7 @@
 
 @if ($time)
     <p {{ $attributes->merge(['class' => 'mt-0! flex items-center gap-1.5 text-xs text-gray-500 max-lg:whitespace-normal!']) }} data-last-changed>
-        <svg class="h-3.5 w-3.5 shrink-0 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <x-icon name="clock" class="h-3.5 w-3.5 shrink-0 text-gray-400" />
         <span>
             {{ $verb }}
             @if ($who)
@@ -37,7 +37,7 @@
     </p>
 @else
     <p {{ $attributes->merge(['class' => 'mt-0! flex items-center gap-1.5 text-xs text-gray-500 max-lg:whitespace-normal!']) }} data-last-changed>
-        <svg class="h-3.5 w-3.5 shrink-0 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        <x-icon name="clock" class="h-3.5 w-3.5 shrink-0 text-gray-400" />
         Belum pernah diubah (memakai teks bawaan)
     </p>
 @endif

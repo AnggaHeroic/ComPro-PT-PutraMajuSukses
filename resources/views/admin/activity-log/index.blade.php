@@ -120,7 +120,7 @@
                         'border-gray-300 bg-white text-gray-700 hover:bg-gray-50' => ! $hasDate,
                     ])
                 >
-                    <svg class="h-[18px] w-[18px] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+                    <x-icon name="calendar" class="h-[18px] w-[18px] shrink-0" />
                     @if ($rangeLabel)
                         <span class="whitespace-nowrap">{{ $rangeLabel }}</span>
                     @endif

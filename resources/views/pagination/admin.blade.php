@@ -22,11 +22,11 @@
                 {{-- Sebelumnya --}}
                 @if ($paginator->onFirstPage())
                     <span aria-disabled="true" aria-label="Halaman sebelumnya" class="{{ $buttonBase }} inline-flex cursor-not-allowed rounded-l-sm border-gray-200 bg-gray-50 text-gray-300">
-                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m15 5-7 7 7 7"/></svg>
+                        <x-icon name="chevron-left" class="h-4 w-4" />
                     </span>
                 @else
                     <a href="{{ $paginator->previousPageUrl() }}" rel="prev" aria-label="Halaman sebelumnya" class="{{ $buttonBase }} inline-flex rounded-l-sm border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
-                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m15 5-7 7 7 7"/></svg>
+                        <x-icon name="chevron-left" class="h-4 w-4" />
                     </a>
                 @endif
 
@@ -50,11 +50,11 @@
                 {{-- Berikutnya --}}
                 @if ($paginator->hasMorePages())
                     <a href="{{ $paginator->nextPageUrl() }}" rel="next" aria-label="Halaman berikutnya" class="{{ $buttonBase }} inline-flex rounded-r-sm border-gray-300 bg-white text-gray-700 hover:bg-gray-50">
-                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m9 5 7 7-7 7"/></svg>
+                        <x-icon name="chevron-right" class="h-4 w-4" />
                     </a>
                 @else
                     <span aria-disabled="true" aria-label="Halaman berikutnya" class="{{ $buttonBase }} inline-flex cursor-not-allowed rounded-r-sm border-gray-200 bg-gray-50 text-gray-300">
-                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m9 5 7 7-7 7"/></svg>
+                        <x-icon name="chevron-right" class="h-4 w-4" />
                     </span>
                 @endif
             </div>

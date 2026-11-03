@@ -135,7 +135,7 @@
 
                                                 @if (! empty($field['hint']))
                                                     <p class="mt-1.5 flex gap-1.5 text-xs leading-5 text-gray-500">
-                                                        <svg class="mt-0.5 h-3.5 w-3.5 shrink-0 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8h.01M11 12h1v5h1m8-5a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+                                                        <x-icon name="info" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-gray-400" />
                                                         <span>{{ $field['hint'] }}</span>
                                                     </p>
                                                 @endif
@@ -197,7 +197,7 @@
                             <div class="mt-4 flex items-center justify-between gap-3 text-sm">
                                 @if (! $loop->first)
                                     <button type="button" @click="select('{{ $sectionKeys[$loop->index - 1] }}')" class="inline-flex items-center gap-1 font-medium text-gray-600 transition hover:text-primary focus:outline-none focus-visible:text-primary" title="{{ $definition['sections'][$sectionKeys[$loop->index - 1]]['label'] }}">
-                                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m15 5-7 7 7 7"/></svg>
+                                        <x-icon name="chevron-left" class="h-4 w-4" />
                                         Sebelumnya
                                     </button>
                                 @else
@@ -206,7 +206,7 @@
                                 @if (! $loop->last)
                                     <button type="button" @click="select('{{ $sectionKeys[$loop->index + 1] }}')" class="inline-flex items-center gap-1 font-medium text-gray-600 transition hover:text-primary focus:outline-none focus-visible:text-primary" title="{{ $definition['sections'][$sectionKeys[$loop->index + 1]]['label'] }}">
                                         Berikutnya
-                                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m9 5 7 7-7 7"/></svg>
+                                        <x-icon name="chevron-right" class="h-4 w-4" />
                                     </button>
                                 @endif
                             </div>

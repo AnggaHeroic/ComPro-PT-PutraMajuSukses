@@ -59,7 +59,7 @@
                     @click="removed = true; preview = null; $refs.file.value = ''"
                     class="inline-flex items-center gap-1.5 rounded border border-red-200 bg-white px-2.5 py-1.5 text-xs font-medium text-red-700 transition-colors hover:bg-red-50"
                 >
-                    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2m-8 0 1 12h8l1-12"/></svg>
+                    <x-icon name="trash-simple" class="h-3.5 w-3.5" />
                     {{ $removeLabel }}
                 </button>
                 <p x-show="removed" x-cloak class="flex flex-wrap items-center gap-2 text-xs text-gray-600">

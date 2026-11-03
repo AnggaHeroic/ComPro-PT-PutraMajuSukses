@@ -196,17 +196,17 @@
 
                             {{-- Panah di sisi kiri/kanan kartu (layar lebar, tanpa border) --}}
                             <button type="button" @click="prev(true)" aria-label="Sebelumnya" class="h-10 w-10 items-center justify-center text-slate-400 transition-colors duration-200 hover:text-primary focus:outline-none focus-visible:text-primary focus-visible:ring-2 focus-visible:ring-primary absolute -left-12 top-1/2 hidden -translate-y-1/2 min-[1366px]:inline-flex">
-                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>
+                                <x-icon name="chevron-left" class="h-6 w-6" stroke-width="1.6" />
                             </button>
                             <button type="button" @click="next(true)" aria-label="Berikutnya" class="h-10 w-10 items-center justify-center text-slate-400 transition-colors duration-200 hover:text-primary focus:outline-none focus-visible:text-primary focus-visible:ring-2 focus-visible:ring-primary absolute -right-12 top-1/2 hidden -translate-y-1/2 min-[1366px]:inline-flex">
-                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+                                <x-icon name="chevron-right" class="h-6 w-6" stroke-width="1.6" />
                             </button>
                         </div>
 
                         {{-- Informasi halaman: di tengah; panah ikut di sini pada layar yang lebih sempit --}}
                         <div class="mt-6 flex items-center justify-center gap-3">
                             <button type="button" @click="prev(true)" aria-label="Sebelumnya" class="inline-flex h-10 w-10 items-center justify-center text-slate-400 transition-colors duration-200 hover:text-primary focus:outline-none focus-visible:text-primary focus-visible:ring-2 focus-visible:ring-primary min-[1366px]:hidden">
-                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>
+                                <x-icon name="chevron-left" class="h-6 w-6" stroke-width="1.6" />
                             </button>
 
                             <span class="font-display text-xs font-semibold tracking-[0.15em] text-slate-500" aria-live="off">
@@ -230,7 +230,7 @@
                             </div>
 
                             <button type="button" @click="next(true)" aria-label="Berikutnya" class="inline-flex h-10 w-10 items-center justify-center text-slate-400 transition-colors duration-200 hover:text-primary focus:outline-none focus-visible:text-primary focus-visible:ring-2 focus-visible:ring-primary min-[1366px]:hidden">
-                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+                                <x-icon name="chevron-right" class="h-6 w-6" stroke-width="1.6" />
                             </button>
                         </div>
                     </div>

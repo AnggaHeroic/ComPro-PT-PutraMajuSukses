@@ -92,10 +92,10 @@
                         <div class="absolute -bottom-6 -right-4 w-36 rounded border border-white/25 bg-primary-dark/80 p-2.5 backdrop-blur-md">
                             <div class="grid grid-cols-2 gap-1.5">
                                 <span class="flex h-9 items-center justify-center rounded-sm bg-white/20 text-white/80">
-                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M21 16l-5-5-8 9"/></svg>
+                                    <x-icon name="image" class="h-4 w-4" stroke-width="1.5" />
                                 </span>
                                 <span class="flex h-9 items-center justify-center rounded-sm bg-white/10 text-white/60">
-                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M21 16l-5-5-8 9"/></svg>
+                                    <x-icon name="image" class="h-4 w-4" stroke-width="1.5" />
                                 </span>
                             </div>
                             <span class="mt-2 block h-1.5 w-2/3 rounded-full bg-white/40"></span>

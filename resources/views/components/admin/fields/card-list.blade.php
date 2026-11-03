@@ -30,13 +30,13 @@
 
                 <div class="flex items-center gap-1">
                     <button type="button" @click="move(index, index - 1)" :disabled="index === 0" aria-label="Naikkan" class="rounded border border-gray-300 bg-white p-1 text-gray-500 hover:bg-gray-100 disabled:opacity-30">
-                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m6 15 6-6 6 6"/></svg>
+                        <x-icon name="chevron-up" class="h-4 w-4" />
                     </button>
                     <button type="button" @click="move(index, index + 1)" :disabled="index === items.length - 1" aria-label="Turunkan" class="rounded border border-gray-300 bg-white p-1 text-gray-500 hover:bg-gray-100 disabled:opacity-30">
-                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6"/></svg>
+                        <x-icon name="chevron-down" class="h-4 w-4" />
                     </button>
                     <button type="button" @click="items.splice(index, 1)" :disabled="items.length <= {{ $minItems }}" aria-label="Hapus {{ $itemLabel }}" class="ml-1 inline-flex items-center gap-1 rounded border border-red-200 bg-white px-1.5 py-1 text-xs font-medium text-red-700 hover:bg-red-50 disabled:opacity-30">
-                        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 7h12M9 7V5h6v2m-8 0 1 12h8l1-12"/></svg>
+                        <x-icon name="trash-simple" class="h-3.5 w-3.5" />
                         Hapus
                     </button>
                 </div>
@@ -81,7 +81,7 @@
         :disabled="items.length >= {{ $maxItems }}"
         class="inline-flex items-center gap-1.5 rounded border border-gray-300 bg-white px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-40"
     >
-        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14"/></svg>
+        <x-icon name="plus" class="h-4 w-4" />
         Tambah {{ $itemLabel }}
     </button>
     <p class="text-xs text-gray-500">Maksimal {{ $maxItems }} kartu. Kartu yang dikosongkan seluruhnya tidak disimpan.</p>
