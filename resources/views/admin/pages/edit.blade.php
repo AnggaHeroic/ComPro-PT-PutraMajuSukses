@@ -21,7 +21,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h1 class="font-display text-2xl font-bold text-gray-900">Konten {{ $definition['label'] }}</h1>
-        <div class="mt-0.5 flex min-w-0 flex-col gap-0.5 lg:flex-row lg:items-center lg:gap-3">
+        <div class="header-meta">
             <p class="mt-0! min-w-0 text-sm text-gray-500">{{ $definition['description'] }}</p>
             <x-admin.last-changed :subject="'page:'.$page" :since="\App\Models\PageContent::where('page', $page)->max('updated_at')" class="lg:border-l lg:border-gray-300 lg:pl-3" />
         </div>
@@ -40,7 +40,7 @@
         enctype="multipart/form-data"
         data-unsaved-guard
         {{ collect($errors->getBags())->contains(fn ($bag) => $bag->any()) ? 'data-unsaved-dirty' : '' }}
-        class="[&_.shadow-sm]:shadow-none [&_section]:rounded-sm [&_header]:rounded-t-sm [&_input]:rounded-sm [&_textarea]:rounded-sm [&_button]:rounded-sm"
+        class="[&_.shadow-sm]:shadow-none [&_.form-control]:shadow-none [&_section]:rounded-sm [&_header]:rounded-t-sm [&_input]:rounded-sm [&_textarea]:rounded-sm [&_button]:rounded-sm"
         x-data="pageEditor({
             active: @js($initialSection),
             sections: @js($sectionKeys),

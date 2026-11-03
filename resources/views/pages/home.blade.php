@@ -47,7 +47,7 @@
 
                 {{-- Section Label --}}
                 <div>
-                    <span class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                    <span class="eyebrow text-primary">
                         {{ $content('intro_label') }}
                     </span>
                 </div>
@@ -109,7 +109,7 @@
 
                     {{-- Left: Heading --}}
                     <div class="lg:col-span-7">
-                        <span class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                        <span class="eyebrow text-primary">
                             {{ $content('services_label') }}
                         </span>
                         <h2
@@ -249,7 +249,7 @@
                     <div class="p-8 sm:p-10 lg:col-span-7 lg:p-11">
 
                         <span
-                            class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary"
+                            class="eyebrow text-primary"
                         >
                             {{ $content('cta_label') }}
                         </span>
@@ -280,7 +280,7 @@
                     >
                         <div class="p-8 sm:p-10 lg:p-11">
                             <span
-                                class="font-display text-xs font-bold uppercase tracking-[0.18em] text-secondary-dark"
+                                class="eyebrow text-secondary-dark"
                             >
                                 Hubungi Kami
                             </span>

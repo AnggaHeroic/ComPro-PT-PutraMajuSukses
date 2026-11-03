@@ -57,7 +57,7 @@
             @endforeach
         </nav>
 
-        <form method="GET" action="{{ route('admin.activity-log.index') }}" class="flex flex-wrap items-center gap-2 border-b border-gray-200 bg-gray-50 px-4 py-3">
+        <form method="GET" action="{{ route('admin.activity-log.index') }}" class="admin-filterbar">
             @unless ($isDefault)
                 <input type="hidden" name="jenis" value="{{ $group }}">
             @endunless
@@ -183,7 +183,7 @@
 
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200 text-sm">
-                <thead class="bg-secondary-dark text-center text-xs font-bold uppercase tracking-wider text-white [&>tr>th]:border-b-2 [&>tr>th]:border-primary">
+                <thead class="admin-thead">
                     <tr>
                         <th class="px-4 py-3">Tanggal &amp; jam</th>
                         <th class="px-4 py-3">Admin</th>
@@ -211,7 +211,7 @@
                             </td>
                             @if ($showMenu)
                                 <td class="px-4 py-3 text-center">
-                                    <span class="inline-block whitespace-nowrap rounded-sm bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-700">{{ $log->menu }}</span>
+                                    <span class="admin-pill">{{ $log->menu }}</span>
                                 </td>
                             @endif
                             <td class="min-w-64 px-4 py-3 text-center text-gray-700">

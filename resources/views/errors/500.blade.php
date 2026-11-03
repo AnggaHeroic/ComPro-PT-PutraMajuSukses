@@ -18,7 +18,7 @@
                     {{-- ERROR MESSAGE --}}
                     <div class="lg:col-span-7">
                         <span
-                            class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary"
+                            class="eyebrow text-primary"
                         >
                             Error 500
                         </span>

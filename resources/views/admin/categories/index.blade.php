@@ -30,7 +30,7 @@
         @else
             <x-admin.status-tabs :current="$status" :counts="$counts" route="admin.categories.index" :params="request()->only(['q'])" />
 
-            <form method="GET" action="{{ route('admin.categories.index') }}" class="flex flex-wrap items-center gap-2 border-b border-gray-200 bg-gray-50 px-4 py-3">
+            <form method="GET" action="{{ route('admin.categories.index') }}" class="admin-filterbar">
                 @if ($status)
                     <input type="hidden" name="status" value="{{ $status }}">
                 @endif
@@ -61,7 +61,7 @@
 
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200 text-sm">
-                <thead class="bg-secondary-dark text-center text-xs font-bold uppercase tracking-wider text-white [&>tr>th]:border-b-2 [&>tr>th]:border-primary">
+                <thead class="admin-thead">
                     <tr>
                         @if ($reorder)
                             <th class="px-4 py-3">Pindah</th>
@@ -95,7 +95,7 @@
                             <td class="px-4 py-3 text-center text-gray-500" data-position>{{ $category->sort_order }}</td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center gap-3">
-                                    <span class="flex h-11 w-16 shrink-0 items-center justify-center overflow-hidden rounded-sm bg-gray-100">
+                                    <span class="admin-thumb">
                                         @if ($category->image_url)
                                             <img src="{{ $category->image_url }}" alt="" class="h-full w-full object-cover" loading="lazy">
                                         @endif

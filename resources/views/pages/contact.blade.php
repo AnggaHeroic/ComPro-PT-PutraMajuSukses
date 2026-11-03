@@ -49,7 +49,7 @@
 
                     {{-- Eyebrow --}}
                     <span
-                        class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary"
+                        class="eyebrow text-primary"
                     >
                         {{ $content('hero_label') }}
                     </span>
@@ -110,7 +110,7 @@
 
                     {{-- Section Label --}}
                     <span
-                        class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary"
+                        class="eyebrow text-primary"
                     >
                         {{ $content('info_label') }}
                     </span>
@@ -166,7 +166,7 @@
 
                     {{-- Section Label --}}
                     <span
-                        class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary"
+                        class="eyebrow text-primary"
                     >
                         {{ $content('location_label') }}
                     </span>
@@ -243,7 +243,7 @@
             >
                 <div class="max-w-3xl">
                     <span
-                        class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary-vibrant"
+                        class="eyebrow text-primary-vibrant"
                     >
                         {{ $content('cta_label') }}
                     </span>

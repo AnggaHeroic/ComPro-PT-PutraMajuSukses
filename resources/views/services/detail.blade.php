@@ -22,7 +22,7 @@
                     {{-- Breadcrumb / Category --}}
                     <div class="flex items-center gap-2">
                         <span
-                            class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary"
+                            class="eyebrow text-primary"
                         >
                             {{ $category->name }}
                         </span>
@@ -86,7 +86,7 @@
 
                     {{-- Section Label --}}
                     <span
-                        class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary"
+                        class="eyebrow text-primary"
                     >
                         Kegiatan Usaha
                     </span>
@@ -161,7 +161,7 @@
 
                 <div>
                     <span
-                        class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary"
+                        class="eyebrow text-primary"
                     >
                         Dokumentasi
                     </span>
@@ -277,13 +277,13 @@
                     <div class="lg:col-span-8">
 
                         <span
-                            class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary"
+                            class="eyebrow text-primary"
                         >
                             Hubungi Kami
                         </span>
 
                         <h2
-                            class="font-display mt-4 max-w-3xl text-3xl font-bold leading-[1.05] tracking-[-0.04em] text-secondary-dark sm:text-4xl lg:text-[2.5rem]"
+                            class="page-title"
                         >
                             Butuh informasi lebih lanjut mengenai
                             <br>
