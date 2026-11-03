@@ -4,7 +4,11 @@
         <p class="mt-1.5 text-sm text-gray-500">Gunakan akun admin untuk mengakses panel pengelolaan.</p>
     </div>
 
-    <x-auth-session-status class="mb-5" :status="session('status')" />
+    @if (session('status'))
+        <div class="rounded border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-700 mb-5">
+            {{ session('status') }}
+        </div>
+    @endif
 
     <form method="POST" action="{{ route('login') }}" class="space-y-5" x-data="loginLock({{ (int) session('login_wait', 0) }})">
         @csrf

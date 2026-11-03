@@ -387,6 +387,7 @@
                             </a>
                         </div>
                     </div>
+                </div>
 
                 {{-- Dashboard Admin (hanya terlihat saat admin login) --}}
                 @auth
