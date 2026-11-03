@@ -9,13 +9,12 @@ use App\Models\ActivityLog;
 use App\Models\ServiceCategory;
 use App\Services\ImageUploader;
 use App\Support\ActivityLogger;
+use App\Support\Reorder;
+use App\Support\SaveRedirect;
 use App\Support\StatusFilter;
-use App\Support\UploadedImage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Throwable;
 
@@ -58,10 +57,10 @@ class ServiceCategoryController extends Controller
 
     public function store(ServiceCategoryRequest $request, ImageUploader $images): RedirectResponse
     {
-        $path = UploadedImage::store($request, $images, 'categories');
+        $path = $images->storeFromRequest($request, 'categories');
 
         try {
-            $iconPath = UploadedImage::store($request, $images, 'category-icons', 'icon_image', 256);
+            $iconPath = $images->storeFromRequest($request, 'category-icons', 'icon_image', 256);
         } catch (Throwable $e) {
             $images->release($path);
 
@@ -82,7 +81,7 @@ class ServiceCategoryController extends Controller
             throw $e;
         }
 
-        return $this->redirectAfterSave($category, 'Kategori berhasil ditambahkan.');
+        return SaveRedirect::toIndex('admin.categories.index', $category->is_published, 'Kategori berhasil ditambahkan.');
     }
 
     public function edit(ServiceCategory $category): View
@@ -95,10 +94,10 @@ class ServiceCategoryController extends Controller
         $data = $request->safe()->except(self::UPLOAD_FIELDS);
         $oldPath = $category->image_path;
         $oldIconPath = $category->icon_image_path;
-        $newPath = UploadedImage::store($request, $images, 'categories');
+        $newPath = $images->storeFromRequest($request, 'categories');
 
         try {
-            $newIconPath = UploadedImage::store($request, $images, 'category-icons', 'icon_image', 256);
+            $newIconPath = $images->storeFromRequest($request, 'category-icons', 'icon_image', 256);
         } catch (Throwable $e) {
             $images->release($newPath);
 
@@ -134,7 +133,7 @@ class ServiceCategoryController extends Controller
             $images->release($oldIconPath);
         }
 
-        return $this->redirectAfterSave($category, 'Kategori berhasil diperbarui.');
+        return SaveRedirect::toIndex('admin.categories.index', $category->is_published, 'Kategori berhasil diperbarui.');
     }
 
     public function destroy(ServiceCategory $category, ImageUploader $images): RedirectResponse
@@ -161,38 +160,10 @@ class ServiceCategoryController extends Controller
      */
     public function reorder(ReorderItemsRequest $request): JsonResponse
     {
-        $order = array_map('intval', $request->validated('order'));
-
-        $expected = ServiceCategory::query()->pluck('id')->map(fn ($id) => (int) $id)->sort()->values()->all();
-
-        if ($expected !== collect($order)->sort()->values()->all()) {
-            throw ValidationException::withMessages([
-                'order' => 'Daftar kategori sudah berubah. Muat ulang halaman lalu coba lagi.',
-            ]);
-        }
-
-        DB::transaction(function () use ($order) {
-            foreach ($order as $position => $id) {
-                ServiceCategory::whereKey($id)->update(['sort_order' => $position + 1]);
-            }
-        });
+        Reorder::apply(ServiceCategory::query(), $request->validated('order'), 'kategori');
 
         ActivityLogger::record(ActivityLog::ACTION_REORDERED, 'Kategori', 'Mengubah urutan kategori');
 
         return response()->json(['message' => 'Urutan kategori disimpan.']);
-    }
-
-    /**
-     * Draft diarahkan ke daftar draft agar langsung terlihat dan mudah ditemukan.
-     */
-    private function redirectAfterSave(ServiceCategory $category, string $message): RedirectResponse
-    {
-        if ($category->is_published) {
-            return redirect()->route('admin.categories.index')->with('success', $message);
-        }
-
-        return redirect()
-            ->route('admin.categories.index', ['status' => 'draft'])
-            ->with('success', rtrim($message, '.').' sebagai draft. Belum tampil di website.');
     }
 }

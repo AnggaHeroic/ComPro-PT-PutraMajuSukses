@@ -11,7 +11,6 @@ use App\Models\ServiceCategory;
 use App\Services\ImageUploader;
 use App\Support\ActivityLogger;
 use App\Support\PageContents;
-use App\Support\UploadedImage;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -51,7 +50,7 @@ class PageContentController extends Controller
             foreach (PageContents::fields($page) as $key => $field) {
                 if (($field['type'] ?? 'text') === 'image') {
                     $old = $content->customImagePath($key);
-                    $new = UploadedImage::store($request, $images, 'pages', "image_{$key}");
+                    $new = $images->storeFromRequest($request, 'pages', "image_{$key}");
 
                     if ($new !== null) {
                         $newPaths[] = $new;

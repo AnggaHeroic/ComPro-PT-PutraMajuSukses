@@ -6,9 +6,11 @@ use App\Models\ActivityImage;
 use App\Models\BusinessActivity;
 use App\Services\ImageUploader;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
 use Tests\TestCase;
 
@@ -131,5 +133,43 @@ class ImageUploaderTest extends TestCase
 
         $this->assertTrue($this->uploader->release($orphan));
         Storage::disk('public')->assertMissing($orphan);
+    }
+
+    public function test_store_from_request_returns_null_without_a_file_and_stores_with_one(): void
+    {
+        $this->assertNull($this->uploader->storeFromRequest(Request::create('/x', 'POST'), 'activities'));
+
+        $request = Request::create('/x', 'POST', [], [], ['cover' => UploadedFile::fake()->image('a.jpg', 300, 200)]);
+        $path = $this->uploader->storeFromRequest($request, 'activities', 'cover');
+
+        $this->assertMatchesRegularExpression('#^activities/[0-9a-f-]{36}\.webp$#', $path);
+        Storage::disk('public')->assertExists($path);
+    }
+
+    public function test_unreadable_files_become_a_validation_error_on_the_field(): void
+    {
+        $bad = UploadedFile::fake()->createWithContent('palsu.jpg', 'bukan gambar');
+
+        try {
+            $this->uploader->storeFromRequest(Request::create('/x', 'POST', [], [], ['image' => $bad]), 'activities');
+            $this->fail('ValidationException seharusnya dilempar.');
+        } catch (ValidationException $e) {
+            $this->assertStringContainsString('Gambar tidak dapat diproses', $e->errors()['image'][0]);
+            $this->assertSame('default', $e->errorBag);
+        }
+        $this->assertSame([], Storage::disk('public')->allFiles());
+    }
+
+    public function test_store_or_invalid_accepts_a_custom_message_and_error_bag(): void
+    {
+        $bad = UploadedFile::fake()->createWithContent('palsu.jpg', 'bukan gambar');
+
+        try {
+            $this->uploader->storeOrInvalid($bad, 'activities', 'images', 'Pesan khusus.', errorBag: 'image7');
+            $this->fail('ValidationException seharusnya dilempar.');
+        } catch (ValidationException $e) {
+            $this->assertSame(['images' => ['Pesan khusus.']], $e->errors());
+            $this->assertSame('image7', $e->errorBag);
+        }
     }
 }

@@ -10,12 +10,12 @@ use App\Models\BusinessActivity;
 use App\Models\ServiceCategory;
 use App\Services\ImageUploader;
 use App\Support\ActivityLogger;
+use App\Support\Reorder;
+use App\Support\SaveRedirect;
 use App\Support\StatusFilter;
-use App\Support\UploadedImage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 use Throwable;
@@ -82,7 +82,7 @@ class BusinessActivityController extends Controller
 
     public function store(BusinessActivityRequest $request, ImageUploader $images): RedirectResponse
     {
-        $path = UploadedImage::store($request, $images, 'activities');
+        $path = $images->storeFromRequest($request, 'activities');
 
         try {
             $activity = BusinessActivity::create([
@@ -96,7 +96,7 @@ class BusinessActivityController extends Controller
             throw $e;
         }
 
-        return $this->redirectAfterSave($activity, 'Aktivitas berhasil ditambahkan.');
+        return SaveRedirect::toIndex('admin.activities.index', $activity->is_published, 'Aktivitas berhasil ditambahkan.', ['category' => $activity->service_category_id]);
     }
 
     public function edit(BusinessActivity $activity): View
@@ -111,7 +111,7 @@ class BusinessActivityController extends Controller
     {
         $data = $request->safe()->except(self::NON_COLUMN_FIELDS);
         $oldPath = $activity->image_path;
-        $newPath = UploadedImage::store($request, $images, 'activities');
+        $newPath = $images->storeFromRequest($request, 'activities');
 
         if ((int) $data['service_category_id'] !== $activity->service_category_id) {
             $data['sort_order'] = (int) BusinessActivity::where('service_category_id', $data['service_category_id'])->max('sort_order') + 1;
@@ -135,7 +135,7 @@ class BusinessActivityController extends Controller
             $images->release($oldPath);
         }
 
-        return $this->redirectAfterSave($activity, 'Aktivitas berhasil diperbarui.');
+        return SaveRedirect::toIndex('admin.activities.index', $activity->is_published, 'Aktivitas berhasil diperbarui.', ['category' => $activity->service_category_id]);
     }
 
     public function destroy(BusinessActivity $activity, ImageUploader $images): RedirectResponse
@@ -167,39 +167,10 @@ class BusinessActivityController extends Controller
             throw ValidationException::withMessages(['category' => 'Kategori tidak ditemukan.']);
         }
 
-        $expected = BusinessActivity::where('service_category_id', $categoryId)
-            ->pluck('id')->map(fn ($id) => (int) $id)->sort()->values()->all();
-
-        if ($expected !== collect($order)->sort()->values()->all()) {
-            throw ValidationException::withMessages([
-                'order' => 'Daftar aktivitas sudah berubah. Muat ulang halaman lalu coba lagi.',
-            ]);
-        }
-
-        DB::transaction(function () use ($order, $categoryId) {
-            foreach ($order as $position => $id) {
-                BusinessActivity::where('service_category_id', $categoryId)->whereKey($id)->update(['sort_order' => $position + 1]);
-            }
-        });
+        Reorder::apply(BusinessActivity::where('service_category_id', $categoryId), $order, 'aktivitas');
 
         ActivityLogger::record(ActivityLog::ACTION_REORDERED, 'Aktivitas Usaha', 'Mengubah urutan aktivitas pada kategori "'.ServiceCategory::whereKey($categoryId)->value('name').'"');
 
         return response()->json(['message' => 'Urutan aktivitas disimpan.']);
-    }
-
-    /**
-     * Draft diarahkan ke daftar draft (pada kategori yang sama) agar mudah ditemukan.
-     */
-    private function redirectAfterSave(BusinessActivity $activity, string $message): RedirectResponse
-    {
-        $params = ['category' => $activity->service_category_id];
-
-        if ($activity->is_published) {
-            return redirect()->route('admin.activities.index', $params)->with('success', $message);
-        }
-
-        return redirect()
-            ->route('admin.activities.index', $params + ['status' => 'draft'])
-            ->with('success', rtrim($message, '.').' sebagai draft. Belum tampil di website.');
     }
 }
