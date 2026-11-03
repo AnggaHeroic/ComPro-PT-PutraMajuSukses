@@ -16,28 +16,28 @@
         @if ($reorder)
             {{-- Mode atur urutan --}}
             <div class="flex flex-wrap items-center gap-x-4 gap-y-2 border-b border-gray-200 bg-primary-light/60 px-4 py-3">
-                <x-admin.reorder-toggle :active="true" :href="route('admin.categories.index')" @click.prevent="cancel($el.href)" />
+                <x-admin.reorder.toggle :active="true" :href="route('admin.categories.index')" @click.prevent="cancel($el.href)" />
 
                 <p class="text-sm text-gray-600">Seret baris atau pakai tombol panah untuk mengubah urutan. Perubahan baru disimpan saat Anda menekan Selesai.</p>
 
-                <x-admin.reorder-status />
+                <x-admin.reorder.status />
 
                 <div class="ml-auto flex items-center gap-2">
-                    <x-secondary-button :href="route('admin.categories.index')" @click.prevent="cancel($el.href)">Batal</x-secondary-button>
-                    <x-secondary-button :href="route('admin.categories.index')" @click.prevent="finish($el.href)">Selesai</x-secondary-button>
+                    <x-admin.button variant="secondary" :href="route('admin.categories.index')" @click.prevent="cancel($el.href)">Batal</x-admin.button>
+                    <x-admin.button variant="secondary" :href="route('admin.categories.index')" @click.prevent="finish($el.href)">Selesai</x-admin.button>
                 </div>
             </div>
         @else
             <x-admin.status-tabs :current="$status" :counts="$counts" route="admin.categories.index" :params="request()->only(['q'])" />
 
-            <form method="GET" action="{{ route('admin.categories.index') }}" class="flex flex-wrap items-center gap-2 border-b border-gray-200 bg-gray-50 px-4 py-3">
+            <form method="GET" action="{{ route('admin.categories.index') }}" class="admin-filterbar">
                 @if ($status)
                     <input type="hidden" name="status" value="{{ $status }}">
                 @endif
 
                 <x-admin.search :value="$search" placeholder="Cari nama atau alamat URL..." />
 
-                <x-secondary-button type="submit">Cari</x-secondary-button>
+                <x-admin.button variant="secondary" type="submit">Cari</x-admin.button>
 
                 {{-- Jumlah data: baris sendiri di bawah pencarian pada mobile --}}
                 <div class="flex w-full items-center gap-2 sm:w-auto">
@@ -48,20 +48,20 @@
                 </div>
 
                 <div class="flex w-full items-center justify-between gap-4 sm:ml-auto sm:w-auto sm:justify-start">
-                    <x-admin.reorder-toggle
+                    <x-admin.reorder.toggle
                         :href="route('admin.categories.index', ['reorder' => 1])"
                         :disabled="$filtered || $total < 2"
                         :reason="$filtered ? 'Hapus pencarian atau filter untuk mengatur urutan.' : 'Perlu minimal dua kategori.'"
                     />
 
-                    <x-primary-button :href="route('admin.categories.create')">+ Tambah Kategori</x-primary-button>
+                    <x-admin.button :href="route('admin.categories.create')">+ Tambah Kategori</x-admin.button>
                 </div>
             </form>
         @endif
 
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200 text-sm">
-                <thead class="bg-secondary-dark text-center text-xs font-bold uppercase tracking-wider text-white [&>tr>th]:border-b-2 [&>tr>th]:border-primary">
+                <thead class="admin-thead">
                     <tr>
                         @if ($reorder)
                             <th class="px-4 py-3">Pindah</th>
@@ -89,13 +89,13 @@
                         >
                             @if ($reorder)
                                 <td class="px-4 py-3 text-center">
-                                    <x-admin.reorder-handle :label="$category->name" />
+                                    <x-admin.reorder.handle :label="$category->name" />
                                 </td>
                             @endif
                             <td class="px-4 py-3 text-center text-gray-500" data-position>{{ $category->sort_order }}</td>
                             <td class="px-4 py-3">
                                 <div class="flex items-center gap-3">
-                                    <span class="flex h-11 w-16 shrink-0 items-center justify-center overflow-hidden rounded-sm bg-gray-100">
+                                    <span class="admin-thumb">
                                         @if ($category->image_url)
                                             <img src="{{ $category->image_url }}" alt="" class="h-full w-full object-cover" loading="lazy">
                                         @endif

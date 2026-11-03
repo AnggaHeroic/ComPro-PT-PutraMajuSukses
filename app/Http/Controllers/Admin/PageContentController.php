@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Admin\Concerns\StoresUploadedImage;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PageContentRequest;
 use App\Models\ActivityLog;
@@ -21,8 +20,6 @@ use Throwable;
 
 class PageContentController extends Controller
 {
-    use StoresUploadedImage;
-
     public function index(): View
     {
         return view('admin.pages.index', ['pages' => PageContents::definitions()]);
@@ -53,7 +50,7 @@ class PageContentController extends Controller
             foreach (PageContents::fields($page) as $key => $field) {
                 if (($field['type'] ?? 'text') === 'image') {
                     $old = $content->customImagePath($key);
-                    $new = $this->storeUploadedImage($request, $images, 'pages', "image_{$key}");
+                    $new = $images->storeFromRequest($request, 'pages', "image_{$key}");
 
                     if ($new !== null) {
                         $newPaths[] = $new;

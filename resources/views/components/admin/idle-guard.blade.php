@@ -18,7 +18,7 @@
         class="fixed bottom-4 right-4 z-[90] w-80 max-w-[calc(100vw-2rem)] rounded-sm border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900 shadow-lg"
     >
         <div class="flex gap-3">
-            <svg class="mt-0.5 h-5 w-5 shrink-0 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 7v5l3 2M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+            <x-icon name="clock-alt" class="mt-0.5 h-5 w-5 shrink-0 text-amber-600" />
             <div>
                 <p class="font-semibold">Sesi akan berakhir</p>
                 <p class="mt-1 leading-5">Anda tidak aktif. Anda akan keluar otomatis dalam <span class="font-semibold tabular-nums" x-text="clock"></span>.</p>

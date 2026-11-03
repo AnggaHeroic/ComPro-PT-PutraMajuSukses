@@ -33,7 +33,7 @@
             aria-label="Tutup"
             class="absolute right-3 top-3 rounded p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
         >
-            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M18 6 6 18"/></svg>
+            <x-icon name="close" class="h-5 w-5" aria-hidden="true" />
         </button>
 
         <div class="flex gap-4 p-6">
@@ -42,8 +42,8 @@
                 :class="$store.confirm.tone === 'danger' ? 'bg-red-100 text-primary' : 'bg-gray-100 text-secondary-dark'"
                 aria-hidden="true"
             >
-                <svg x-show="$store.confirm.tone === 'danger'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.3 3.9 2.4 17.5A2 2 0 0 0 4.1 20.5h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
-                <svg x-show="$store.confirm.tone !== 'danger'" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8h.01M11 12h1v5h1m8-5a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+                <x-icon name="warning" class="h-5 w-5" x-show="$store.confirm.tone === 'danger'" />
+                <x-icon name="info" class="h-5 w-5" x-show="$store.confirm.tone !== 'danger'" />
             </span>
 
             <div class="min-w-0">
@@ -52,7 +52,7 @@
                 <p id="confirm-message" class="mt-1.5 text-sm leading-6 text-gray-600" x-text="$store.confirm.message"></p>
 
                 <div x-show="$store.confirm.caution" x-cloak class="mt-3 flex gap-2.5 rounded-sm border border-amber-300 bg-amber-50 px-3 py-2.5 text-sm leading-5 text-amber-900" role="note">
-                    <svg class="mt-0.5 h-4 w-4 shrink-0 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M10.3 3.9 2.4 17.5A2 2 0 0 0 4.1 20.5h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
+                    <x-icon name="warning" class="mt-0.5 h-4 w-4 shrink-0 text-amber-600" stroke-width="2" />
                     <p><strong class="font-semibold">Perhatian:</strong> <span x-text="$store.confirm.caution"></span></p>
                 </div>
             </div>

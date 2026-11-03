@@ -14,7 +14,7 @@
     </x-slot>
 
     <div class="mb-6 flex gap-3 rounded-sm border border-gray-300 bg-white p-4 text-sm text-gray-600">
-        <svg class="mt-0.5 h-5 w-5 shrink-0 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8h.01M11 12h1v5h1m8-5a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+        <x-icon name="info" class="mt-0.5 h-5 w-5 shrink-0 text-primary" stroke-width="1.7" />
         <p>Pilih halaman yang ingin dikelola, buka tab bagian untuk mengubah konten di dalamnya. Daftar kategori dan aktivitas usaha dikelola terpisah melalui menu <a href="{{ route('admin.categories.index') }}" class="font-medium text-primary hover:underline">Kategori</a> dan <a href="{{ route('admin.activities.index') }}" class="font-medium text-primary hover:underline">Aktivitas Usaha</a>.</p>
     </div>
 
@@ -33,7 +33,7 @@
 
                 <div class="flex items-center justify-between gap-4 border-t border-gray-200 bg-gray-50 px-5 py-3">
                     <p class="text-xs text-gray-500">{{ count($page['sections']) }} bagian</p>
-                    <x-primary-button :href="route('admin.pages.edit', $key)" size="sm">Kelola</x-primary-button>
+                    <x-admin.button :href="route('admin.pages.edit', $key)" size="sm">Kelola</x-admin.button>
                 </div>
             </section>
         @endforeach

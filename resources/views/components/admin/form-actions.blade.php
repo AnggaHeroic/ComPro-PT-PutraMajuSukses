@@ -9,8 +9,8 @@
         </p>
 
         <div class="ml-auto flex items-center gap-3">
-            <x-secondary-button :href="$cancel">Batal</x-secondary-button>
-            <x-primary-button>{{ $label }}</x-primary-button>
+            <x-admin.button variant="secondary" :href="$cancel">Batal</x-admin.button>
+            <x-admin.button>{{ $label }}</x-admin.button>
         </div>
     </div>
 </div>

@@ -57,30 +57,30 @@
             @endforeach
         </nav>
 
-        <form method="GET" action="{{ route('admin.activity-log.index') }}" class="flex flex-wrap items-center gap-2 border-b border-gray-200 bg-gray-50 px-4 py-3">
+        <form method="GET" action="{{ route('admin.activity-log.index') }}" class="admin-filterbar">
             @unless ($isDefault)
                 <input type="hidden" name="jenis" value="{{ $group }}">
             @endunless
 
             @if ($showMenu)
-                <x-select name="menu" class="w-full sm:w-48" onchange="this.form.submit()" aria-label="Filter menu">
+                <x-form.select name="menu" class="w-full sm:w-48" onchange="this.form.submit()" aria-label="Filter menu">
                     <option value="">Semua menu</option>
                     @foreach ($menus as $item)
                         <option value="{{ $item }}" @selected($menu === $item)>{{ $item }}</option>
                     @endforeach
-                </x-select>
+                </x-form.select>
             @endif
 
-            <x-select name="action" class="w-full sm:w-44" onchange="this.form.submit()" aria-label="Filter aksi">
+            <x-form.select name="action" class="w-full sm:w-44" onchange="this.form.submit()" aria-label="Filter aksi">
                 <option value="">Semua aksi</option>
                 @foreach ($actions as $key => [$label])
                     <option value="{{ $key }}" @selected($action === $key)>{{ $label }}</option>
                 @endforeach
-            </x-select>
+            </x-form.select>
 
             <x-admin.search :value="$search" placeholder="Cari keterangan atau admin..." />
 
-            <x-secondary-button type="submit">Cari</x-secondary-button>
+            <x-admin.button variant="secondary" type="submit">Cari</x-admin.button>
 
             {{-- Filter tanggal: satu tombol ikon; panelnya berisi pintasan, rentang, atau satu hari tertentu --}}
             <div
@@ -120,7 +120,7 @@
                         'border-gray-300 bg-white text-gray-700 hover:bg-gray-50' => ! $hasDate,
                     ])
                 >
-                    <svg class="h-[18px] w-[18px] shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+                    <x-icon name="calendar" class="h-[18px] w-[18px] shrink-0" />
                     @if ($rangeLabel)
                         <span class="whitespace-nowrap">{{ $rangeLabel }}</span>
                     @endif
@@ -183,7 +183,7 @@
 
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200 text-sm">
-                <thead class="bg-secondary-dark text-center text-xs font-bold uppercase tracking-wider text-white [&>tr>th]:border-b-2 [&>tr>th]:border-primary">
+                <thead class="admin-thead">
                     <tr>
                         <th class="px-4 py-3">Tanggal &amp; jam</th>
                         <th class="px-4 py-3">Admin</th>
@@ -211,7 +211,7 @@
                             </td>
                             @if ($showMenu)
                                 <td class="px-4 py-3 text-center">
-                                    <span class="inline-block whitespace-nowrap rounded-sm bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-700">{{ $log->menu }}</span>
+                                    <span class="admin-pill">{{ $log->menu }}</span>
                                 </td>
                             @endif
                             <td class="min-w-64 px-4 py-3 text-center text-gray-700">

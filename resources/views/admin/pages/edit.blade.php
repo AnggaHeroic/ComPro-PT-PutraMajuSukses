@@ -21,7 +21,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h1 class="font-display text-2xl font-bold text-gray-900">Konten {{ $definition['label'] }}</h1>
-        <div class="mt-0.5 flex min-w-0 flex-col gap-0.5 lg:flex-row lg:items-center lg:gap-3">
+        <div class="header-meta">
             <p class="mt-0! min-w-0 text-sm text-gray-500">{{ $definition['description'] }}</p>
             <x-admin.last-changed :subject="'page:'.$page" :since="\App\Models\PageContent::where('page', $page)->max('updated_at')" class="lg:border-l lg:border-gray-300 lg:pl-3" />
         </div>
@@ -30,7 +30,7 @@
     <x-slot name="actions">
         <x-admin.back :href="route('admin.pages.index')" />
         @if ($publicRoute)
-            <x-secondary-button :href="route($publicRoute)" target="_blank" rel="noopener" size="sm" class="max-sm:hidden">Lihat halaman</x-secondary-button>
+            <x-admin.button variant="secondary" :href="route($publicRoute)" target="_blank" rel="noopener" size="sm" class="max-sm:hidden">Lihat halaman</x-admin.button>
         @endif
     </x-slot>
 
@@ -40,7 +40,7 @@
         enctype="multipart/form-data"
         data-unsaved-guard
         {{ collect($errors->getBags())->contains(fn ($bag) => $bag->any()) ? 'data-unsaved-dirty' : '' }}
-        class="[&_.shadow-sm]:shadow-none [&_section]:rounded-sm [&_header]:rounded-t-sm [&_input]:rounded-sm [&_textarea]:rounded-sm [&_button]:rounded-sm"
+        class="[&_.shadow-sm]:shadow-none [&_.form-control]:shadow-none [&_section]:rounded-sm [&_header]:rounded-t-sm [&_input]:rounded-sm [&_textarea]:rounded-sm [&_button]:rounded-sm"
         x-data="pageEditor({
             active: @js($initialSection),
             sections: @js($sectionKeys),
@@ -126,25 +126,25 @@
                                                 </div>
 
                                                 @if ($type === 'title')
-                                                    <x-admin.title-field :id="'content_'.$key" :name="'content['.$key.']'" :value="$value" :max="$max" />
+                                                    <x-admin.fields.title :id="'content_'.$key" :name="'content['.$key.']'" :value="$value" :max="$max" />
                                                 @elseif ($type === 'textarea')
-                                                    <x-textarea :id="'content_'.$key" :name="'content['.$key.']'" rows="4" :maxlength="$max" :required="! $optional">{{ $value }}</x-textarea>
+                                                    <x-form.textarea :id="'content_'.$key" :name="'content['.$key.']'" rows="4" :maxlength="$max" :required="! $optional">{{ $value }}</x-form.textarea>
                                                 @else
-                                                    <x-text-input :id="'content_'.$key" :name="'content['.$key.']'" type="text" :value="$value" :maxlength="$max" :required="! $optional" />
+                                                    <x-form.input :id="'content_'.$key" :name="'content['.$key.']'" type="text" :value="$value" :maxlength="$max" :required="! $optional" />
                                                 @endif
 
                                                 @if (! empty($field['hint']))
                                                     <p class="mt-1.5 flex gap-1.5 text-xs leading-5 text-gray-500">
-                                                        <svg class="mt-0.5 h-3.5 w-3.5 shrink-0 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8h.01M11 12h1v5h1m8-5a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+                                                        <x-icon name="info" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-gray-400" />
                                                         <span>{{ $field['hint'] }}</span>
                                                     </p>
                                                 @endif
-                                                <x-input-error :messages="$messages" class="mt-2" />
+                                                <x-form.error :messages="$messages" class="mt-2" />
                                             </div>
                                         @elseif ($type === 'image')
                                             <div>
                                                 @php($custom = $content->customImagePath($key))
-                                                <x-admin.image-field
+                                                <x-admin.fields.image
                                                     :name="'image_'.$key"
                                                     :remove-name="'remove_image_'.$key"
                                                     :label="$field['label']"
@@ -160,7 +160,7 @@
                                                 <p class="mb-1.5 text-sm font-medium text-gray-700">{{ $field['label'] }}</p>
 
                                                 @if ($type === 'list')
-                                                    <x-admin.list-field
+                                                    <x-admin.fields.list
                                                         :name="'content['.$key.'][]'"
                                                         :items="old('content.'.$key, $content->list($key))"
                                                         :item-label="$field['item_label'] ?? 'Butir'"
@@ -169,7 +169,7 @@
                                                         :min-items="$field['min_items'] ?? 1"
                                                     />
                                                 @elseif ($type === 'cards')
-                                                    <x-admin.card-list-field
+                                                    <x-admin.fields.card-list
                                                         :name="'content['.$key.']'"
                                                         :items="old('content.'.$key, $content->cards($key))"
                                                         :item-label="$field['item_label'] ?? 'Butir'"
@@ -186,7 +186,7 @@
                                                 @if (! empty($field['hint']))
                                                     <p class="mt-1.5 text-xs leading-5 text-gray-500">{{ $field['hint'] }}</p>
                                                 @endif
-                                                <x-input-error :messages="$messages" class="mt-2" />
+                                                <x-form.error :messages="$messages" class="mt-2" />
                                             </div>
                                         @endif
                                     @endforeach
@@ -197,7 +197,7 @@
                             <div class="mt-4 flex items-center justify-between gap-3 text-sm">
                                 @if (! $loop->first)
                                     <button type="button" @click="select('{{ $sectionKeys[$loop->index - 1] }}')" class="inline-flex items-center gap-1 font-medium text-gray-600 transition hover:text-primary focus:outline-none focus-visible:text-primary" title="{{ $definition['sections'][$sectionKeys[$loop->index - 1]]['label'] }}">
-                                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m15 5-7 7 7 7"/></svg>
+                                        <x-icon name="chevron-left" class="h-4 w-4" />
                                         Sebelumnya
                                     </button>
                                 @else
@@ -206,7 +206,7 @@
                                 @if (! $loop->last)
                                     <button type="button" @click="select('{{ $sectionKeys[$loop->index + 1] }}')" class="inline-flex items-center gap-1 font-medium text-gray-600 transition hover:text-primary focus:outline-none focus-visible:text-primary" title="{{ $definition['sections'][$sectionKeys[$loop->index + 1]]['label'] }}">
                                         Berikutnya
-                                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m9 5 7 7-7 7"/></svg>
+                                        <x-icon name="chevron-right" class="h-4 w-4" />
                                     </button>
                                 @endif
                             </div>
@@ -248,7 +248,7 @@
                 data-confirm-second-tone="primary"
             >
                 @csrf
-                <x-secondary-button type="submit" size="sm" class="w-40">Setel default</x-secondary-button>
+                <x-admin.button variant="secondary" type="submit" size="sm" class="w-40">Setel default</x-admin.button>
             </form>
 
             <form
@@ -264,7 +264,7 @@
             >
                 @csrf
                 @method('DELETE')
-                <x-secondary-button type="submit" size="sm" class="border-red-300! text-red-700! hover:border-red-400! hover:bg-red-50! w-40">Reset default</x-secondary-button>
+                <x-admin.button variant="secondary" type="submit" size="sm" class="border-red-300! text-red-700! hover:border-red-400! hover:bg-red-50! w-40">Reset default</x-admin.button>
             </form>
 
             @if ($content->hasCustomDefaults())

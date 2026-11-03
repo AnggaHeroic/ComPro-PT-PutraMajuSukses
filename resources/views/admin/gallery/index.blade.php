@@ -5,17 +5,17 @@
     </x-slot>
 
     <div class="overflow-hidden rounded border border-gray-200 bg-white shadow-sm">
-    <form method="GET" action="{{ route('admin.gallery.index') }}" class="flex flex-wrap items-center gap-2 border-b border-gray-200 bg-gray-50 px-4 py-3">
-        <x-select name="category" class="w-full sm:w-56" onchange="this.form.submit()" aria-label="Filter kategori">
+    <form method="GET" action="{{ route('admin.gallery.index') }}" class="admin-filterbar">
+        <x-form.select name="category" class="w-full sm:w-56" onchange="this.form.submit()" aria-label="Filter kategori">
             <option value="">Semua kategori</option>
             @foreach ($categories as $category)
                 <option value="{{ $category->id }}" @selected($categoryId === $category->id)>{{ $category->name }}</option>
             @endforeach
-        </x-select>
+        </x-form.select>
 
         <x-admin.search :value="$search" placeholder="Cari nama, alamat URL, atau KBLI..." />
 
-        <x-secondary-button type="submit">Cari</x-secondary-button>
+        <x-admin.button variant="secondary" type="submit">Cari</x-admin.button>
 
                 {{-- Jumlah data: baris sendiri di bawah pencarian pada mobile --}}
                 <div class="flex w-full items-center gap-2 sm:w-auto">
@@ -28,7 +28,7 @@
 
     <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200 text-sm">
-                <thead class="bg-secondary-dark text-center text-xs font-bold uppercase tracking-wider text-white [&>tr>th]:border-b-2 [&>tr>th]:border-primary">
+                <thead class="admin-thead">
                     <tr>
                         <th class="px-4 py-3">Aktivitas</th>
                         <th class="px-4 py-3">Kategori</th>
@@ -41,7 +41,7 @@
                         <tr class="transition hover:bg-gray-50">
                             <td class="px-4 py-3">
                                 <div class="flex items-center gap-3">
-                                    <span class="flex h-11 w-16 shrink-0 items-center justify-center overflow-hidden rounded-sm bg-gray-100">
+                                    <span class="admin-thumb">
                                         @if ($activity->image_url)
                                             <img src="{{ $activity->image_url }}" alt="" class="h-full w-full object-cover" loading="lazy">
                                         @endif
@@ -55,12 +55,12 @@
                                 </div>
                             </td>
                             <td class="px-4 py-3 text-center">
-                                <span class="inline-block whitespace-nowrap rounded-sm bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-700">{{ $activity->category->name }}</span>
+                                <span class="admin-pill">{{ $activity->category->name }}</span>
                             </td>
                             <td class="px-4 py-3 text-center">
                                 @if ($activity->images_count > 0)
                                     <span class="inline-flex items-center gap-1 rounded-sm bg-primary-light px-2 py-0.5 text-xs font-semibold text-primary-dark">
-                                        <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M21 16l-5-5-8 9"/></svg>
+                                        <x-icon name="image" class="h-3 w-3" />
                                         {{ $activity->images_count }}
                                     </span>
                                 @else
@@ -70,7 +70,7 @@
                             <td class="px-4 py-3 text-center">
                                 <a href="{{ route('admin.gallery.show', $activity) }}" class="inline-flex items-center gap-1.5 whitespace-nowrap rounded bg-secondary-dark px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-primary">
                                     Kelola galeri
-                                    <x-admin.arrow class="h-3.5 w-3.5" />
+                                    <x-icon name="arrow-forward" class="h-3.5 w-3.5" />
                                 </a>
                             </td>
                         </tr>

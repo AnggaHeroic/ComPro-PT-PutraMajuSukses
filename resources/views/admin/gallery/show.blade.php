@@ -19,17 +19,17 @@
     </x-slot>
 
     <x-slot name="actions">
-        <x-secondary-button size="sm" :href="route('admin.activities.edit', $activity)">Edit aktivitas</x-secondary-button>
+        <x-admin.button variant="secondary" size="sm" :href="route('admin.activities.edit', $activity)">Edit aktivitas</x-admin.button>
         @if ($publicUrl)
-            <x-secondary-button size="sm" :href="$publicUrl" target="_blank" rel="noopener">Lihat di website
-                <x-admin.arrow direction="external" class="h-3.5 w-3.5" />
-            </x-secondary-button>
+            <x-admin.button variant="secondary" size="sm" :href="$publicUrl" target="_blank" rel="noopener">Lihat di website
+                <x-icon name="external" class="h-3.5 w-3.5" />
+            </x-admin.button>
         @endif
         <x-admin.back :href="route('admin.gallery.index', ['category' => $activity->service_category_id])" />
     </x-slot>
 
     {{-- Unggah foto --}}
-    <x-admin.card title="Tambah foto" :description="'Pilih hingga '.$maxPerUpload.' foto sekaligus. JPG, PNG, atau WebP, maksimal '.number_format(config('images.max_upload_kb') / 1024, 0).' MB per foto; otomatis dikonversi ke WebP dan dikompres.'" class="mb-8">
+    <x-admin.card title="Tambah foto" :description="'Pilih hingga '.$maxPerUpload.' foto sekaligus dengan format JPG, PNG, atau WebP. Ukuran maksimal '.number_format(config('images.max_upload_kb') / 1024, 0).' MB per foto. Foto akan otomatis dikonversi ke WebP dan dikompres.'" class="mb-8">
         <form
             method="POST"
             action="{{ route('admin.gallery.store', $activity) }}"
@@ -61,9 +61,9 @@
                 @endif
             </div>
 
-            <x-primary-button x-bind:disabled="count === 0">
+            <x-admin.button x-bind:disabled="count === 0">
                 Unggah <span x-show="count > 0" x-text="'(' + count + ')'"></span>
-            </x-primary-button>
+            </x-admin.button>
         </form>
     </x-admin.card>
 
@@ -111,7 +111,7 @@
 
                 <div class="flex items-center gap-3">
                     <span x-show="dirty" x-cloak class="text-xs text-amber-700">Urutan belum disimpan</span>
-                    <x-primary-button x-bind:disabled="! dirty">Simpan urutan</x-primary-button>
+                    <x-admin.button x-bind:disabled="! dirty">Simpan urutan</x-admin.button>
                 </div>
             </form>
 
@@ -146,7 +146,7 @@
                             {{-- Ikon zoom saat hover (sama seperti dokumentasi di halaman publik) --}}
                             <span class="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/0 transition-colors duration-300 group-hover:bg-black/25">
                                 <span class="flex h-10 w-10 scale-90 items-center justify-center rounded-full bg-white/90 text-secondary-dark opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:opacity-100">
-                                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M11 8v6M8 11h6"/></svg>
+                                    <x-icon name="zoom-plus" class="h-5 w-5" />
                                 </span>
                             </span>
 
@@ -154,10 +154,10 @@
 
                             <div class="absolute right-2 top-2 flex gap-1">
                                 <button type="button" @click="move({{ $image->id }}, -1)" :disabled="ids.indexOf({{ $image->id }}) === 0" aria-label="Geser ke depan" class="flex h-7 w-7 items-center justify-center rounded-sm bg-white/90 text-gray-700 hover:bg-white disabled:opacity-40">
-                                    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5m7 7-7-7 7-7"/></svg>
+                                    <x-icon name="back" class="h-3.5 w-3.5" />
                                 </button>
                                 <button type="button" @click="move({{ $image->id }}, 1)" :disabled="ids.indexOf({{ $image->id }}) === ids.length - 1" aria-label="Geser ke belakang" class="flex h-7 w-7 items-center justify-center rounded-sm bg-white/90 text-gray-700 hover:bg-white disabled:opacity-40">
-                                    <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>
+                                    <x-icon name="next" class="h-3.5 w-3.5" />
                                 </button>
                             </div>
                         </div>
@@ -193,7 +193,7 @@
                                 <div class="mt-2 flex items-center gap-1.5">
                                     {{-- Ganti foto: pilih file, lalu tekan Simpan (dengan konfirmasi) --}}
                                     <label class="inline-flex h-8 cursor-pointer items-center gap-1.5 rounded border border-gray-300 bg-white px-2.5 text-xs font-semibold text-gray-600 transition focus-within:ring-2 focus-within:ring-primary hover:border-primary hover:text-primary">
-                                        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4m0 0L7 9m5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+                                        <x-icon name="upload" class="h-3.5 w-3.5" />
                                         Ganti
                                         <span class="sr-only">foto {{ $loop->iteration }}</span>
                                         <input type="file" name="image" accept="image/jpeg,image/png,image/webp" class="sr-only" @change="dirty = true; fileName = $el.files[0]?.name ?? ''">
@@ -201,7 +201,7 @@
 
                                     {{-- Hapus: mengirim form terpisah di bawah (atribut form) --}}
                                     <button type="submit" form="delete-{{ $image->id }}" aria-label="Hapus foto {{ $loop->iteration }}" class="inline-flex h-8 items-center gap-1.5 rounded border border-gray-300 bg-white px-2.5 text-xs font-semibold text-gray-600 transition hover:border-primary hover:bg-primary-light hover:text-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">
-                                        <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16"/><path d="M10 11v6M14 11v6"/><path d="M6 7l1 12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-12"/><path d="M9 7V4h6v3"/></svg>
+                                        <x-icon name="trash" class="h-3.5 w-3.5" />
                                         Hapus
                                     </button>
 
@@ -217,14 +217,14 @@
                                 @method('DELETE')
                             </form>
 
-                            <x-input-error :messages="array_merge($bag->get('caption'), $bag->get('image'))" class="mt-2 text-xs" />
+                            <x-form.error :messages="array_merge($bag->get('caption'), $bag->get('image'))" class="mt-2 text-xs" />
                         </div>
                     </article>
                 @endforeach
             </div>
 
             {{-- Pratinjau foto (komponen yang sama dengan halaman publik) --}}
-            <x-img-lightbox :images="$images->pluck('image_url')->all()" />
+            <x-site.img-lightbox :images="$images->pluck('image_url')->all()" />
         </div>
     @endif
 </x-app-layout>

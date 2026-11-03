@@ -5,9 +5,9 @@
     </x-slot>
 
     <x-slot name="actions">
-        <x-secondary-button size="sm" :href="route('home')" target="_blank" rel="noopener">Lihat website
-            <x-admin.arrow direction="external" class="h-3.5 w-3.5" />
-        </x-secondary-button>
+        <x-admin.button variant="secondary" size="sm" :href="route('home')" target="_blank" rel="noopener">Lihat website
+            <x-icon name="external" class="h-3.5 w-3.5" />
+        </x-admin.button>
     </x-slot>
 
     {{-- Banner: elemen visual yang sama dengan halaman login --}}
@@ -92,11 +92,11 @@
                     <p class="mt-3 font-display text-4xl font-bold text-gray-900">{{ $categoryCount }}</p>
                 </div>
                 <span class="flex h-11 w-11 items-center justify-center rounded bg-primary-light text-primary">
-                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4"/><path d="M3 17l9 4 9-4"/></svg>
+                    <x-icon name="layers" class="h-5 w-5" />
                 </span>
             </div>
             <p class="mt-3 text-sm text-gray-500">{{ $categoryPublished }} terbit, {{ $categoryCount - $categoryPublished }} draft</p>
-            <p class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">Kelola kategori <x-admin.arrow class="transition group-hover:translate-x-1" /></p>
+            <p class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">Kelola kategori <x-icon name="arrow-forward" class="transition group-hover:translate-x-1" /></p>
         </a>
 
         <a href="{{ route('admin.activities.index') }}" class="group relative overflow-hidden rounded border border-gray-200 bg-white p-6 shadow-sm transition hover:border-primary/40">
@@ -107,11 +107,11 @@
                     <p class="mt-3 font-display text-4xl font-bold text-gray-900">{{ $activityCount }}</p>
                 </div>
                 <span class="flex h-11 w-11 items-center justify-center rounded bg-primary-light text-primary">
-                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><path d="M3 6h.01"/><path d="M3 12h.01"/><path d="M3 18h.01"/></svg>
+                    <x-icon name="list" class="h-5 w-5" />
                 </span>
             </div>
             <p class="mt-3 text-sm text-gray-500">{{ $activityPublished }} terbit, {{ $activityCount - $activityPublished }} draft</p>
-            <p class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">Kelola aktivitas <x-admin.arrow class="transition group-hover:translate-x-1" /></p>
+            <p class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">Kelola aktivitas <x-icon name="arrow-forward" class="transition group-hover:translate-x-1" /></p>
         </a>
 
         <a href="{{ route('admin.gallery.index') }}" class="group relative overflow-hidden rounded border border-gray-200 bg-white p-6 shadow-sm transition hover:border-primary/40">
@@ -122,11 +122,11 @@
                     <p class="mt-3 font-display text-4xl font-bold text-gray-900">{{ $photoCount }}</p>
                 </div>
                 <span class="flex h-11 w-11 items-center justify-center rounded bg-primary-light text-primary">
-                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M21 16l-5-5-8 9"/></svg>
+                    <x-icon name="image" class="h-5 w-5" stroke-width="1.7" />
                 </span>
             </div>
             <p class="mt-3 text-sm text-gray-500">di {{ $activitiesWithGallery }} dari {{ $activityCount }} aktivitas</p>
-            <p class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">Kelola galeri <x-admin.arrow class="transition group-hover:translate-x-1" /></p>
+            <p class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">Kelola galeri <x-icon name="arrow-forward" class="transition group-hover:translate-x-1" /></p>
         </a>
     </div>
 
@@ -164,7 +164,7 @@
 
         <div class="relative flex items-center gap-4">
             <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded bg-white text-primary shadow-sm ring-1 ring-primary/10">
-                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+                <x-icon name="clock" class="h-5 w-5" stroke-width="1.7" />
             </span>
 
             <div class="min-w-0">
@@ -191,7 +191,7 @@
     <section class="mt-10" aria-labelledby="recent-title">
         <div class="mb-3 flex items-center justify-between gap-4">
             <h2 id="recent-title" class="text-xs font-bold uppercase tracking-wider text-gray-500">Terakhir diubah</h2>
-            <a href="{{ route('admin.activity-log.index') }}" class="group inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-dark">Lihat semua riwayat <x-admin.arrow class="transition group-hover:translate-x-1" /></a>
+            <a href="{{ route('admin.activity-log.index') }}" class="group inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-dark">Lihat semua riwayat <x-icon name="arrow-forward" class="transition group-hover:translate-x-1" /></a>
         </div>
 
         <div class="rounded border border-gray-200 bg-white shadow-sm">

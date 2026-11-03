@@ -3,10 +3,12 @@
 namespace App\Services;
 
 use GdImage;
+use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use InvalidArgumentException;
 use RuntimeException;
 
@@ -81,6 +83,38 @@ class ImageUploader
         }
 
         return $path;
+    }
+
+    /**
+     * Simpan gambar dari field upload pada request (default "image"); kembalikan path relatif atau null
+     * bila field tidak diisi. Gagal diproses menjadi error validasi, bukan 500.
+     */
+    public function storeFromRequest(Request $request, string $directory, string $field = 'image', ?int $maxWidth = null): ?string
+    {
+        if (! $request->hasFile($field)) {
+            return null;
+        }
+
+        return $this->storeOrInvalid($request->file($field), $directory, $field, maxWidth: $maxWidth);
+    }
+
+    /**
+     * Seperti store(), tetapi kegagalan pengolahan dilaporkan lalu diubah menjadi error validasi pada
+     * $field, dengan pesan dan error bag yang bisa disesuaikan pemanggil.
+     */
+    public function storeOrInvalid(UploadedFile $file, string $directory, string $field = 'image', ?string $message = null, ?int $maxWidth = null, ?string $errorBag = null): string
+    {
+        try {
+            return $this->store($file, $directory, $maxWidth);
+        } catch (InvalidArgumentException|RuntimeException $e) {
+            report($e);
+
+            $invalid = ValidationException::withMessages([
+                $field => $message ?? 'Gambar tidak dapat diproses. Gunakan file JPG, PNG, atau WebP yang valid.',
+            ]);
+
+            throw $errorBag === null ? $invalid : $invalid->errorBag($errorBag);
+        }
     }
 
     /**

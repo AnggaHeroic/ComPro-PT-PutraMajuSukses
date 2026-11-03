@@ -176,7 +176,7 @@ class IdleTimeoutTest extends TestCase
         $this->get('/')->assertDontSee('idleGuard(', false);
         $this->get('/login')->assertDontSee('idleGuard(', false);
 
-        $js = file_get_contents(resource_path('js/app.js'));
+        $js = file_get_contents(resource_path('js/admin.js'));
         $this->assertStringContainsString("Alpine.data('idleGuard'", $js);
         $this->assertStringContainsString("'admin-last-activity'", $js);
         // Selama peringatan tampil, aktivitas biasa diabaikan; hanya "Tetap masuk" (touch dipaksa) yang melanjutkan sesi.
@@ -247,7 +247,7 @@ class IdleTimeoutTest extends TestCase
 
     public function test_the_browser_guard_keeps_the_warning_across_pages_and_reloads(): void
     {
-        $js = file_get_contents(resource_path('js/app.js'));
+        $js = file_get_contents(resource_path('js/admin.js'));
 
         // Memuat halaman tidak mengulang hitungan bila peringatan sedang berjalan.
         $this->assertStringContainsString('if (Date.now() - this.lastActivity() < warningFrom) {', $js);

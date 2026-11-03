@@ -16,8 +16,9 @@
 
     --color-surface: #f8f9fa;
 
-    --font-display: "Inter", sans-serif;
-    --font-body: "Montserrat", sans-serif;
+    /* Montserrat untuk judul, heading, dan label; Inter untuk teks isi. */
+    --font-display: "Montserrat", sans-serif;
+    --font-body: "Inter", sans-serif;
 }
 
 @layer base {
@@ -27,8 +28,18 @@
     html {
         scroll-behavior: smooth;
     }
+    /* Teks isi memakai bobot medium agar tidak samar di atas latar putih. */
     body {
-        @apply bg-white font-body text-secondary-dark antialiased;
+        @apply bg-white font-body font-medium text-secondary-dark antialiased;
+    }
+    /* Semua heading memakai font judul, juga yang tidak diberi kelas font-display. */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-display;
     }
     ::selection {
         @apply bg-primary text-white;
@@ -44,6 +55,46 @@
     @media (min-width: 1024px) {
         padding-inline: 2rem;
     }
+}
+
+/*
+ * Gaya yang dipakai berulang di banyak tampilan. Dipecah menjadi utilitas agar mengubah
+ * tampilannya cukup di sini, bukan di tiap file Blade.
+ */
+@utility form-control {
+    @apply rounded border border-gray-300 bg-white px-3.5 py-2.5 text-sm text-gray-900 shadow-sm transition focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20;
+}
+
+/* Label kecil huruf kapital di atas judul; warnanya ditentukan pemakai (text-primary dan seterusnya). */
+@utility eyebrow {
+    @apply font-bold font-display text-xs tracking-[0.18em] uppercase;
+}
+
+/* Judul besar di halaman layanan. */
+@utility page-title {
+    @apply font-bold font-display leading-[1.05] lg:text-[2.5rem] max-w-3xl mt-4 sm:text-4xl text-3xl text-secondary-dark tracking-[-0.04em];
+}
+
+/* Tabel daftar di panel admin. */
+@utility admin-thead {
+    @apply [&>tr>th]:border-b-2 [&>tr>th]:border-primary bg-secondary-dark font-bold text-center text-white text-xs tracking-wider uppercase;
+}
+
+@utility admin-filterbar {
+    @apply bg-gray-50 border-b border-gray-200 flex flex-wrap gap-2 items-center px-4 py-3;
+}
+
+@utility admin-thumb {
+    @apply bg-gray-100 flex h-11 items-center justify-center overflow-hidden rounded-sm shrink-0 w-16;
+}
+
+@utility admin-pill {
+    @apply bg-gray-100 font-medium inline-block px-2 py-0.5 rounded-sm text-gray-700 text-xs whitespace-nowrap;
+}
+
+/* Baris keterangan di bawah judul halaman admin (nama item dan "terakhir diubah"). */
+@utility header-meta {
+    @apply flex flex-col gap-0.5 lg:flex-row lg:gap-3 lg:items-center min-w-0 mt-0.5;
 }
 
 /*

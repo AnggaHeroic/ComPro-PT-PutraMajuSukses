@@ -26,7 +26,7 @@
                     <div class="flex flex-wrap gap-3 lg:justify-end">
                         <x-button href="{{ route('about') }}">
                             {{ $content('hero_button_primary') }}
-                            <x-icons.arrow-right class="h-4 w-4" />
+                            <x-icon name="arrow-right" class="h-4 w-4" />
                         </x-button>
                         <x-button
                             href="{{ route('services') }}"
@@ -47,7 +47,7 @@
 
                 {{-- Section Label --}}
                 <div>
-                    <span class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                    <span class="eyebrow text-primary">
                         {{ $content('intro_label') }}
                     </span>
                 </div>
@@ -109,7 +109,7 @@
 
                     {{-- Left: Heading --}}
                     <div class="lg:col-span-7">
-                        <span class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                        <span class="eyebrow text-primary">
                             {{ $content('services_label') }}
                         </span>
                         <h2
@@ -153,7 +153,7 @@
                 @php($servicePages = $navCategories->chunk(6))
 
                 @if ($servicePages->count() <= 1)
-                    <x-service-grid :categories="$navCategories" grid-class="mt-16 grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-3" />
+                    <x-site.service-grid :categories="$navCategories" grid-class="mt-16 grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-3" />
                 @else
                     <div
                         class="mt-16"
@@ -188,7 +188,7 @@
                                             x-bind:inert="current !== {{ $pageIndex }}"
                                             :aria-hidden="current !== {{ $pageIndex }}"
                                         >
-                                            <x-service-grid :categories="$pageCategories" :offset="$pageIndex * 6" />
+                                            <x-site.service-grid :categories="$pageCategories" :offset="$pageIndex * 6" />
                                         </div>
                                     @endforeach
                                 </div>
@@ -196,17 +196,17 @@
 
                             {{-- Panah di sisi kiri/kanan kartu (layar lebar, tanpa border) --}}
                             <button type="button" @click="prev(true)" aria-label="Sebelumnya" class="h-10 w-10 items-center justify-center text-slate-400 transition-colors duration-200 hover:text-primary focus:outline-none focus-visible:text-primary focus-visible:ring-2 focus-visible:ring-primary absolute -left-12 top-1/2 hidden -translate-y-1/2 min-[1366px]:inline-flex">
-                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>
+                                <x-icon name="chevron-left" class="h-6 w-6" stroke-width="1.6" />
                             </button>
                             <button type="button" @click="next(true)" aria-label="Berikutnya" class="h-10 w-10 items-center justify-center text-slate-400 transition-colors duration-200 hover:text-primary focus:outline-none focus-visible:text-primary focus-visible:ring-2 focus-visible:ring-primary absolute -right-12 top-1/2 hidden -translate-y-1/2 min-[1366px]:inline-flex">
-                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+                                <x-icon name="chevron-right" class="h-6 w-6" stroke-width="1.6" />
                             </button>
                         </div>
 
                         {{-- Informasi halaman: di tengah; panah ikut di sini pada layar yang lebih sempit --}}
                         <div class="mt-6 flex items-center justify-center gap-3">
                             <button type="button" @click="prev(true)" aria-label="Sebelumnya" class="inline-flex h-10 w-10 items-center justify-center text-slate-400 transition-colors duration-200 hover:text-primary focus:outline-none focus-visible:text-primary focus-visible:ring-2 focus-visible:ring-primary min-[1366px]:hidden">
-                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg>
+                                <x-icon name="chevron-left" class="h-6 w-6" stroke-width="1.6" />
                             </button>
 
                             <span class="font-display text-xs font-semibold tracking-[0.15em] text-slate-500" aria-live="off">
@@ -230,7 +230,7 @@
                             </div>
 
                             <button type="button" @click="next(true)" aria-label="Berikutnya" class="inline-flex h-10 w-10 items-center justify-center text-slate-400 transition-colors duration-200 hover:text-primary focus:outline-none focus-visible:text-primary focus-visible:ring-2 focus-visible:ring-primary min-[1366px]:hidden">
-                                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg>
+                                <x-icon name="chevron-right" class="h-6 w-6" stroke-width="1.6" />
                             </button>
                         </div>
                     </div>
@@ -249,7 +249,7 @@
                     <div class="p-8 sm:p-10 lg:col-span-7 lg:p-11">
 
                         <span
-                            class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary"
+                            class="eyebrow text-primary"
                         >
                             {{ $content('cta_label') }}
                         </span>
@@ -269,7 +269,7 @@
                         <div class="mt-6">
                             <x-button href="{{ route('contact') }}">
                                 {{ $content('cta_button') }}
-                                <x-icons.arrow-right class="h-4 w-4" />
+                                <x-icon name="arrow-right" class="h-4 w-4" />
                             </x-button>
                         </div>
                     </div>
@@ -280,7 +280,7 @@
                     >
                         <div class="p-8 sm:p-10 lg:p-11">
                             <span
-                                class="font-display text-xs font-bold uppercase tracking-[0.18em] text-secondary-dark"
+                                class="eyebrow text-secondary-dark"
                             >
                                 Hubungi Kami
                             </span>
@@ -292,7 +292,7 @@
                                     href="{{ \App\Support\PageContents::telHref($contact('contact_phone')) }}"
                                     class="group flex gap-4 py-3.5 first:pt-0"
                                 >
-                                    <x-icons.phone
+                                    <x-icon name="phone"
                                         class="h-[18px] w-[18px] shrink-0 text-primary"
                                     />
 
@@ -316,7 +316,7 @@
                                     href="mailto:{{ $contact('contact_email') }}"
                                     class="group flex gap-4 py-3.5"
                                 >
-                                    <x-icons.mail
+                                    <x-icon name="mail"
                                         class="h-[18px] w-[18px] shrink-0 text-primary"
                                     />
 
@@ -343,7 +343,7 @@
                                     class="group flex gap-4 py-3.5 last:pb-0"
                                     aria-label="Lihat alamat PT. Putra Maju Sukses di Google Maps"
                                 >
-                                    <x-icons.maps
+                                    <x-icon name="maps"
                                         class="h-[18px] w-[18px] shrink-0 text-primary"
                                     />
 

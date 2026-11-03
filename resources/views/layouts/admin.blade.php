@@ -10,7 +10,7 @@
 
         <x-favicon />
 
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/js/admin.js'])
     </head>
     <body class="bg-gray-100 text-gray-900" data-admin-confirm>
         <div x-data="{ sidebar: false }" @keydown.escape.window="sidebar = false">
@@ -20,7 +20,7 @@
                 {{-- Mobile top bar: satu-satunya elemen yang menempel di mobile --}}
                 <div class="sticky top-0 z-30 flex h-14 items-center gap-3 border-b-[3px] border-primary bg-white px-4 shadow-sm lg:hidden">
                     <button type="button" @click="sidebar = true" aria-label="Buka menu" class="-ms-1 rounded p-2 text-gray-600 hover:bg-gray-100 focus:outline-none">
-                        <x-icons.menu class="h-5 w-5" />
+                        <x-icon name="menu" class="h-5 w-5" />
                     </button>
                     <x-application-logo class="h-8 w-auto mix-blend-multiply" />
                 </div>

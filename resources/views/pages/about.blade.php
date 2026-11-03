@@ -13,7 +13,7 @@
                 {{-- Hero Top Label --}}
                 <div class="pt-16 sm:pt-20 lg:pt-20">
                     <span
-                        class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary"
+                        class="eyebrow text-primary"
                     >
                         {{ $content('hero_label') }}
                     </span>
@@ -192,7 +192,7 @@
                 ></div>
                 <div class="mx-auto max-w-3xl text-center">
                     <span
-                        class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary-vibrant"
+                        class="eyebrow text-primary-vibrant"
                     >
                         {{ $content('direction_label') }}
                     </span>
@@ -296,7 +296,7 @@
                 {{-- Heading --}}
                 <div class="max-w-3xl">
                     <span
-                        class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary"
+                        class="eyebrow text-primary"
                     >
                         {{ $content('objectives_label') }}
                     </span>
@@ -332,7 +332,7 @@
                     <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
                         <div>
                             <span
-                                class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary"
+                                class="eyebrow text-primary"
                             >
                                 {{ $content('cta_label') }}
                             </span>
@@ -349,7 +349,7 @@
                         </div>
                         <x-button href="{{ route('services') }}">
                             {{ $content('cta_button') }}
-                            <x-icons.arrow-right class="h-4 w-4" />
+                            <x-icon name="arrow-right" class="h-4 w-4" />
                         </x-button>
                     </div>
                 </div>

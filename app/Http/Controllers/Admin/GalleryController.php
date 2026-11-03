@@ -12,13 +12,12 @@ use App\Models\BusinessActivity;
 use App\Models\ServiceCategory;
 use App\Services\ImageUploader;
 use App\Support\ActivityLogger;
+use App\Support\Reorder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
-use InvalidArgumentException;
-use RuntimeException;
 use Throwable;
 
 class GalleryController extends Controller
@@ -90,15 +89,17 @@ class GalleryController extends Controller
 
         try {
             foreach ($files as $file) {
-                $paths[] = $images->store($file, self::DIRECTORY);
+                $paths[] = $images->storeOrInvalid(
+                    $file,
+                    self::DIRECTORY,
+                    'images',
+                    'Salah satu file tidak dapat diproses. Gunakan file JPG, PNG, atau WebP yang valid. Tidak ada foto yang disimpan.',
+                );
             }
-        } catch (InvalidArgumentException|RuntimeException $e) {
+        } catch (ValidationException $e) {
             $this->releaseAll($images, $paths);
-            report($e);
 
-            throw ValidationException::withMessages([
-                'images' => 'Salah satu file tidak dapat diproses. Gunakan file JPG, PNG, atau WebP yang valid. Tidak ada foto yang disimpan.',
-            ]);
+            throw $e;
         }
 
         try {
@@ -137,15 +138,13 @@ class GalleryController extends Controller
         $newPath = null;
 
         if ($request->hasFile('image')) {
-            try {
-                $newPath = $images->store($request->file('image'), self::DIRECTORY);
-            } catch (InvalidArgumentException|RuntimeException $e) {
-                report($e);
-
-                throw ValidationException::withMessages([
-                    'image' => 'Foto pengganti tidak dapat diproses. Gunakan file JPG, PNG, atau WebP yang valid.',
-                ])->errorBag('image'.$image->id);
-            }
+            $newPath = $images->storeOrInvalid(
+                $request->file('image'),
+                self::DIRECTORY,
+                'image',
+                'Foto pengganti tidak dapat diproses. Gunakan file JPG, PNG, atau WebP yang valid.',
+                errorBag: 'image'.$image->id,
+            );
 
             $data['image_path'] = $newPath;
         }
@@ -193,22 +192,7 @@ class GalleryController extends Controller
      */
     public function reorder(ReorderGalleryRequest $request, BusinessActivity $activity): RedirectResponse
     {
-        $order = array_map('intval', $request->validated('order'));
-
-        $expected = $activity->images()->pluck('id')->map(fn ($id) => (int) $id)->sort()->values()->all();
-        $given = collect($order)->sort()->values()->all();
-
-        if ($expected !== $given) {
-            throw ValidationException::withMessages([
-                'order' => 'Daftar foto sudah berubah. Muat ulang halaman lalu coba lagi.',
-            ]);
-        }
-
-        DB::transaction(function () use ($activity, $order) {
-            foreach ($order as $position => $id) {
-                $activity->images()->whereKey($id)->update(['sort_order' => $position + 1]);
-            }
-        });
+        Reorder::apply($activity->images(), $request->validated('order'), 'foto');
 
         ActivityLogger::record(ActivityLog::ACTION_REORDERED, 'Galeri', "Mengubah urutan foto di galeri aktivitas \"{$activity->name}\"");
 

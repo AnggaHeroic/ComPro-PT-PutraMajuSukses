@@ -30,7 +30,7 @@
 
 <body>
     {{-- Global Navigation --}}
-    @include('components.navbar')
+    @include('components.site.navbar')
 
     {{-- Page Content --}}
     <main id="main-content">
@@ -38,6 +38,6 @@
     </main>
 
     {{-- Global Footer --}}
-    @include('components.footer')
+    @include('components.site.footer')
 </body>
 </html>

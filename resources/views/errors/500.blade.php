@@ -18,7 +18,7 @@
                     {{-- ERROR MESSAGE --}}
                     <div class="lg:col-span-7">
                         <span
-                            class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary"
+                            class="eyebrow text-primary"
                         >
                             Error 500
                         </span>
@@ -54,7 +54,7 @@
                             {{-- Back to Home --}}
                             <x-button href="{{ url('/') }}">
                                 Kembali ke Beranda
-                                <x-icons.arrow-right class="h-4 w-4" />
+                                <x-icon name="arrow-right" class="h-4 w-4" />
                             </x-button>
 
                             {{-- Retry --}}
@@ -79,7 +79,7 @@
                             <div
                                 class="w-full max-w-[620px] text-primary"
                             >
-                                <x-icons.error-500
+                                <x-icon name="error-500"
                                     class="h-auto w-full"
                                 />
                             </div>

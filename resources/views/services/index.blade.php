@@ -12,7 +12,7 @@
 
                     {{-- Label --}}
                     <span
-                        class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary"
+                        class="eyebrow text-primary"
                     >
                         {{ $content('hero_label') }}
                     </span>
@@ -45,7 +45,7 @@
     <section{!! $content->mark('categories') !!} class="bg-surface">
         <div class="container-site py-16 sm:py-20 lg:py-24">
             <div class="max-w-2xl">
-                <span class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary">
+                <span class="eyebrow text-primary">
                     {{ $content('categories_label') }}
                 </span>
                 <h2 class="font-display mt-4 text-3xl font-bold tracking-[-0.035em] text-secondary-dark sm:text-4xl">
@@ -112,12 +112,12 @@
                     {{-- CTA CONTENT --}}
                     <div class="lg:col-span-8">
                         <span
-                            class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary"
+                            class="eyebrow text-primary"
                         >
                             {{ $content('cta_label') }}
                         </span>
                         <h2
-                            class="font-display mt-4 max-w-3xl text-3xl font-bold leading-[1.05] tracking-[-0.04em] text-secondary-dark sm:text-4xl lg:text-[2.5rem]"
+                            class="page-title"
                         >
                             {!! $content->rich('cta_title') !!}
                         </h2>

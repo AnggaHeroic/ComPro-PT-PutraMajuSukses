@@ -4,7 +4,7 @@ namespace App\Support;
 
 /**
  * Daftar ikon kategori yang boleh dipilih admin (whitelist).
- * Setiap kunci harus punya komponen resources/views/components/icons/{kunci}.blade.php.
+ * Setiap kunci harus terdaftar di App\Support\Icons (dipakai lewat <x-icon name="kunci" />).
  * Admin tidak pernah memasukkan markup SVG; hanya memilih kunci dari daftar ini.
  */
 class CategoryIcons

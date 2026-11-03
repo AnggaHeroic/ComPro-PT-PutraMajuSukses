@@ -26,7 +26,7 @@
                 aria-label="Kembali ke Layanan & Jasa"
                 class="absolute left-6 top-6 z-20 inline-flex h-10 w-10 items-center justify-center text-white/70 transition-all duration-200 hover:-translate-x-1 hover:text-white sm:left-8 sm:top-8 lg:left-10 lg:top-10"
             >
-                <x-icons.arrow-left class="h-4 w-4" />
+                <x-icon name="arrow-left" class="h-4 w-4" />
             </a>
 
             {{-- Content --}}
@@ -42,7 +42,7 @@
 
                     {{-- Label --}}
                     <span
-                        class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary-vibrant"
+                        class="eyebrow text-primary-vibrant"
                     >
                         Layanan & Jasa
                     </span>
@@ -75,7 +75,7 @@
             {{-- SECTION INTRO --}}
             <div class="max-w-3xl">
                 <span
-                    class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary"
+                    class="eyebrow text-primary"
                 >
                     Aktivitas Usaha
                 </span>
@@ -236,13 +236,13 @@
                 <div class="grid items-center gap-8 lg:grid-cols-12 lg:gap-12">
                     <div class="lg:col-span-8">
                         <span
-                            class="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary"
+                            class="eyebrow text-primary"
                         >
                             Hubungi Kami
                         </span>
 
                         <h2
-                            class="font-display mt-4 max-w-3xl text-3xl font-bold leading-[1.05] tracking-[-0.04em] text-secondary-dark sm:text-4xl lg:text-[2.5rem]"
+                            class="page-title"
                         >
                             Kenali layanan kami
                             <br>

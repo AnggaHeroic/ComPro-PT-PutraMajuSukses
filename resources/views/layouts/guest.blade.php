@@ -10,7 +10,7 @@
 
         <x-favicon />
 
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/js/admin.js'])
     </head>
     <body class="bg-white text-gray-900">
         <div class="grid min-h-screen lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
@@ -23,7 +23,7 @@
                     class="pointer-events-none absolute inset-0 opacity-[0.12]"
                     style="background-image: linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px); background-size: 48px 48px; mask-image: radial-gradient(ellipse at 30% 30%, #000 10%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse at 30% 30%, #000 10%, transparent 75%);"
                 ></div>
-                <x-icons.house class="pointer-events-none absolute -bottom-16 -right-16 size-md text-white/[0.07]" stroke-width="0.5" />
+                <x-icon name="house" class="pointer-events-none absolute -bottom-16 -right-16 size-md text-white/[0.07]" />
 
                 <div class="relative">
                     <a href="{{ route('home') }}" class="inline-flex items-center rounded bg-white p-2" aria-label="Kembali ke website">
@@ -66,15 +66,15 @@
 
                                     <div class="grid grid-cols-3 gap-2.5">
                                         <div class="space-y-2 rounded-sm border border-white/15 bg-white/5 p-2.5">
-                                            <x-icons.computer class="h-4 w-4 text-white/70" />
+                                            <x-icon name="computer" class="h-4 w-4 text-white/70" />
                                             <span class="block h-1.5 w-2/3 rounded-full bg-white/30"></span>
                                         </div>
                                         <div class="space-y-2 rounded-sm border border-white/15 bg-white/5 p-2.5">
-                                            <x-icons.warehouse class="h-4 w-4 text-white/70" />
+                                            <x-icon name="warehouse" class="h-4 w-4 text-white/70" />
                                             <span class="block h-1.5 w-2/3 rounded-full bg-white/30"></span>
                                         </div>
                                         <div class="space-y-2 rounded-sm border border-white/15 bg-white/5 p-2.5">
-                                            <x-icons.gearcog class="h-4 w-4 text-white/70" />
+                                            <x-icon name="gearcog" class="h-4 w-4 text-white/70" />
                                             <span class="block h-1.5 w-2/3 rounded-full bg-white/30"></span>
                                         </div>
                                     </div>
@@ -92,10 +92,10 @@
                         <div class="absolute -bottom-6 -right-4 w-36 rounded border border-white/25 bg-primary-dark/80 p-2.5 backdrop-blur-md">
                             <div class="grid grid-cols-2 gap-1.5">
                                 <span class="flex h-9 items-center justify-center rounded-sm bg-white/20 text-white/80">
-                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M21 16l-5-5-8 9"/></svg>
+                                    <x-icon name="image" class="h-4 w-4" stroke-width="1.5" />
                                 </span>
                                 <span class="flex h-9 items-center justify-center rounded-sm bg-white/10 text-white/60">
-                                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M21 16l-5-5-8 9"/></svg>
+                                    <x-icon name="image" class="h-4 w-4" stroke-width="1.5" />
                                 </span>
                             </div>
                             <span class="mt-2 block h-1.5 w-2/3 rounded-full bg-white/40"></span>
@@ -116,7 +116,7 @@
                     {{ $slot }}
 
                     <a href="{{ route('home') }}" class="mt-8 inline-flex items-center gap-1.5 text-sm text-gray-500 transition hover:text-primary">
-                        <x-icons.arrow-left class="h-4 w-4" />
+                        <x-icon name="arrow-left" class="h-4 w-4" />
                         Kembali ke website
                     </a>
                 </div>
