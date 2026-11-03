@@ -93,7 +93,7 @@ class UnsavedGuardTest extends TestCase
     public function test_the_guard_script_is_loaded_and_covers_links_unload_and_automatic_logout(): void
     {
         $guard = file_get_contents(resource_path('js/unsaved-guard.js'));
-        $app = file_get_contents(resource_path('js/app.js'));
+        $app = file_get_contents(resource_path('js/admin.js'));
 
         $this->assertStringContainsString("import { setupUnsavedGuard } from './unsaved-guard'", $app);
         $this->assertStringContainsString('setupUnsavedGuard(Alpine)', $app);

@@ -210,7 +210,7 @@ class PageDefaultsTest extends TestCase
         // Pesan menyebut seluruh konten halaman yang dikelola di website publik.
         $this->assertGreaterThanOrEqual(3, substr_count(strtolower($html), 'seluruh konten halaman tentang kami') + substr_count($html, 'Seluruh teks, judul, daftar, dan foto halaman Tentang Kami'));
 
-        $js = file_get_contents(resource_path('js/app.js'));
+        $js = file_get_contents(resource_path('js/admin.js'));
         $this->assertStringContainsString("form.dataset.confirmSecondTitle", $js);
         $this->assertStringContainsString("step: 'Konfirmasi 2 dari 2'", $js);
         $this->assertStringContainsString('Konfirmasi 1 dari 2', $js);
@@ -246,7 +246,7 @@ class PageDefaultsTest extends TestCase
 
     public function test_first_confirmation_shows_a_caution_box_wired_in_script_and_dialog(): void
     {
-        $js = file_get_contents(resource_path('js/app.js'));
+        $js = file_get_contents(resource_path('js/admin.js'));
         $this->assertStringContainsString('caution: form.dataset.confirmCaution', $js);
         $this->assertStringContainsString("this.caution = caution ?? '';", $js);
 

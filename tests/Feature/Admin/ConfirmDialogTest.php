@@ -77,7 +77,7 @@ class ConfirmDialogTest extends TestCase
 
     public function test_confirmation_logic_is_wired_in_the_script(): void
     {
-        $js = file_get_contents(resource_path('js/app.js'));
+        $js = file_get_contents(resource_path('js/admin.js'));
 
         $this->assertStringContainsString("Alpine.store('confirm'", $js);
         $this->assertMatchesRegularExpression("/document\.addEventListener\(\s*'submit'/", $js);

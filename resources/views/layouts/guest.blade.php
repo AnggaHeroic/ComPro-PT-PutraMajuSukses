@@ -10,7 +10,7 @@
 
         <x-favicon />
 
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/js/admin.js'])
     </head>
     <body class="bg-white text-gray-900">
         <div class="grid min-h-screen lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">

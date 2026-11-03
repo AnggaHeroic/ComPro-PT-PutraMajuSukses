@@ -10,7 +10,7 @@
 
         <x-favicon />
 
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite(['resources/css/app.css', 'resources/js/admin.js'])
     </head>
     <body class="bg-gray-100 text-gray-900" data-admin-confirm>
         <div x-data="{ sidebar: false }" @keydown.escape.window="sidebar = false">
